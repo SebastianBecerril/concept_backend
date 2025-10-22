@@ -4,21 +4,105 @@
     "type": "split",
     "children": [
       {
-        "id": "0191866cebf1b7c3",
+        "id": "bfc6fe452d3b612c",
         "type": "tabs",
         "children": [
           {
-            "id": "60ccb8b74e272dda",
+            "id": "c7f546cb94b8d8d3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "design/concepts/UserAuthentication/implementation.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "implementation"
+            }
+          },
+          {
+            "id": "fadc10958cdb1590",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "design/concepts/UserAuthentication/UserAuthentication.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "UserAuthentication"
+            }
+          },
+          {
+            "id": "ec86d0a94c5b39de",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "design/concepts/UserProfile/UserProfile.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "UserProfile"
+            }
+          },
+          {
+            "id": "bcb95f1ac9240229",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "design/concepts/CourseCatalog/CourseCatalog.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "CourseCatalog"
+            }
+          },
+          {
+            "id": "92b054aa7b287c45",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "design/concepts/Community/Community.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Community"
+            }
+          },
+          {
+            "id": "f8a68138d21be51f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "design/concepts/UserEnrollments/UserEnrollments.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "UserEnrollments"
+            }
+          },
+          {
+            "id": "5ff2cba23cde7b86",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "design/concepts/CommunityBoard/CommunityBoard.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "CommunityBoard"
             }
           }
         ]
@@ -78,7 +162,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 367.5
   },
   "right": {
     "id": "ffc60e9763cc384c",
@@ -169,8 +253,43 @@
       "bases:Create new base": false
     }
   },
-  "active": "60ccb8b74e272dda",
+  "active": "c7f546cb94b8d8d3",
   "lastOpenFiles": [
-    "README.md"
+    "src/concepts/UserAuthentication/UserAuthenticationConcept.ts",
+    "src/concepts/UserAuthentication",
+    "src/concepts/LikertSurvey/UserAuthentication",
+    "context/design/concepts/UserAuthentication/implementation.md/20251022_001718.6bdd9636.md",
+    "context/design/concepts/UserAuthentication/implementation.md/steps/response.cdcab27c.md",
+    "context/design/concepts/UserAuthentication/implementation.md/20251022_001649.8ac52486.md",
+    "context/design/concepts/UserAuthentication/implementation.md/steps/implement.f7536c03.md",
+    "context/design/concepts/UserAuthentication/implementation.md/steps/_.3876b520.md",
+    "context/design/concepts/UserAuthentication/implementation.md/steps/_.db39d951.md",
+    "context/design/concepts/UserAuthentication/implementation.md/steps/_.331f5a1f.md",
+    "context/design/concepts/UserAuthentication/implementation.md/steps/_.04e090af.md",
+    "context/design/concepts/UserAuthentication/implementation.md/steps/Generic Parameters.087161ea.md",
+    "context/design/concepts/UserAuthentication/implementation.md/steps/approach.5df2171f.md",
+    "context/design/concepts/UserAuthentication/implementation.md/steps/_.b0364a7a.md",
+    "context/design/concepts/UserAuthentication/implementation.md/steps/_.3731a859.md",
+    "context/design/concepts/UserAuthentication/implementation.md/steps/_.3eb68380.md",
+    "context/design/concepts/UserAuthentication/implementation.md/steps",
+    "context/design/concepts/UserAuthentication/implementation.md",
+    "context/design/concepts/UserAuthentication",
+    "design/concepts/LikertSurvey/implementation.md",
+    "design/concepts/UserAuthentication/UserAuthentication.md",
+    "design/concepts/UserAuthentication/implementation.md",
+    "design/concepts/UserProfile/UserProfile.md",
+    "design/concepts/CommunityBoard/CommunityBoard.md",
+    "design/concepts/Community/Community.md",
+    "design/concepts/CourseCatalog/CourseCatalog.md",
+    "design/concepts/UserEnrollments/UserEnrollments.md",
+    "design/brainstorming/final-brainstorming.md",
+    "context/design/brainstorming/final-brainstorming.md/20251021_231204.41e65fa8.md",
+    "context/design/brainstorming/final-brainstorming.md/steps/response.7e76b8bf.md",
+    "context/design/brainstorming/final-brainstorming.md/steps",
+    "context/design/brainstorming/application-brainstorming.md/steps",
+    "context/design/brainstorming/individual-concept-brainstorming/user-concepts-brainstorming.md/steps",
+    "context/design/brainstorming/individual-concept-brainstorming/community-board-brainstorming.md/steps",
+    "context/design/brainstorming/individual-concept-brainstorming/user-enrollments-brainstorming.md/steps",
+    "context/design/brainstorming/individual-concept-brainstorming/community-brainstorming.md/steps"
   ]
 }
