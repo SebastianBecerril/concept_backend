@@ -1,0 +1,168 @@
+---
+timestamp: 'Thu Oct 23 2025 13:22:28 GMT-0400 (Eastern Daylight Time)'
+parent: '[[..\20251023_132228.96e232c6.md]]'
+content_id: 31c63c42386646ca808ae21ab31334c74e570b56057ec152375eba8a8b92e224
+---
+
+# file: src/concepts/UserProfile/UserProfileConcept.test.ts
+
+```typescript
+import { assertEquals, assertExists, assert } from "jsr:@std/assert";
+import { testDb } from "@utils/database.ts";
+import { ID } from "@utils/types.ts";
+import UserProfileConcept from "./UserProfileConcept.ts";
+
+// Test suite for the UserProfile concept, following the testing roadmap.
+Deno.test("UserProfileConcept", async (t) => {
+  const [db, client] = await testDb();
+  const userProfile = new UserProfileConcept(db);
+
+  // Define mock IDs for testing purposes.
+  const userA = "user:Alice" as ID;
+  const userB = "user:Bob" as ID;
+
+  // This hook runs before each test step, ensuring a clean state.
+  t.beforeEach(async () => {
+    await userProfile.profiles.deleteMany({});
+  });
+
+  // This hook runs after all tests in this file are complete.
+  t.afterAll(async () => {
+    await client.close();
+  });
+
+  /**
+   * STAGE 2: Testing the Concept Principle
+   * This test follows the "happy path" or core user story of the concept:
+   * a user creates a profile, updates it, and then deletes it.
+   */
+  await t.step("Principle: create, update, and view a profile", async () => {
+    // 1. Create a profile for userA.
+    const createResult = await userProfile.createProfile({
+      user: userA,
+      displayName: "Alice",
+    });
+    assert(!("error" in createResult), "Profile creation should succeed");
+    const profileId = createResult.profile;
+    assertExists(profileId);
+
+    // 2. Verify the initial state of the created profile.
+    let profileDoc = await userProfile._getProfileById({ profile: profileId });
+    assertExists(profileDoc);
+    assertEquals(profileDoc.user, userA);
+    assertEquals(profileDoc.displayName, "Alice");
+    assertEquals(profileDoc.bio, undefined); // Initially unset
+
+    // 3. Update the profile's bio and thumbnail image.
+    await userProfile.updateBio({
+      profile: profileId,
+      newBio: "Software Developer",
+    });
+    await userProfile.updateThumbnailImage({
+      profile: profileId,
+      newThumbnailImageURL: "http://example.com/alice.png",
+    });
+
+    // 4. Verify the updates were applied correctly.
+    profileDoc = await userProfile._getProfileById({ profile: profileId });
+    assertExists(profileDoc);
+    assertEquals(profileDoc.bio, "Software Developer");
+    assertEquals(profileDoc.thumbnailImageURL, "http://example.com/alice.png");
+
+    // 5. Update the display name.
+    await userProfile.updateDisplayName({
+      profile: profileId,
+      newDisplayName: "Alice Smith",
+    });
+
+    // 6. Verify the display name update.
+    profileDoc = await userProfile._getProfileById({ profile: profileId });
+    assertEquals(profileDoc!.displayName, "Alice Smith");
+
+    // 7. Delete the profile.
+    const deleteResult = await userProfile.deleteProfile({
+      profile: profileId,
+    });
+    assert(!("error" in deleteResult), "Profile deletion should succeed");
+
+    // 8. Verify the profile has been deleted.
+    profileDoc = await userProfile._getProfileById({ profile: profileId });
+    assertEquals(profileDoc, null);
+  });
+
+  /**
+   * STAGE 3: Testing Action Requirements (Failure and Edge Cases)
+   * This test ensures that the concept handles invalid inputs and states
+   * gracefully by returning appropriate errors, as defined by the `requires` clauses.
+   */
+  await t.step("Handles invalid inputs and unmet requirements", async () => {
+    // Test `createProfile` requirements
+    let errorResult = await userProfile.createProfile({
+      user: userB,
+      displayName: "  ",
+    }); // Whitespace only
+    assert("error" in errorResult, "Should error on empty display name");
+    assertEquals(errorResult.error, "Display name cannot be empty.");
+
+    // Test for duplicate user profile creation
+    await userProfile.createProfile({ user: userA, displayName: "Alice" });
+    errorResult = await userProfile.createProfile({
+      user: userA,
+      displayName: "Alice Again",
+    });
+    assert("error" in errorResult, "Should error on duplicate user profile");
+    assertEquals(errorResult.error, "A profile for this user already exists.");
+
+    // Test updating a non-existent profile
+    const fakeProfileId = "profile:fake" as ID;
+    const updateError = await userProfile.updateBio({
+      profile: fakeProfileId,
+      newBio: "This should fail",
+    });
+    assert("error" in updateError, "Should error on non-existent profile");
+    assertEquals(updateError.error, "ID not found.");
+
+    // Test deleting a non-existent profile
+    const deleteError = await userProfile.deleteProfile({
+      profile: fakeProfileId,
+    });
+    assert("error" in deleteError, "Should error on non-existent profile");
+    assertEquals(deleteError.error, "ID not found.");
+  });
+
+  /**
+   * STAGE 4: Testing Queries
+   * This test explicitly verifies that the query methods retrieve the correct data
+   * and handle cases where no data is found.
+   */
+  await t.step("Queries retrieve correct data", async () => {
+    // Setup: Create a profile to query against.
+    const { profile: profileIdA } = await userProfile.createProfile({
+      user: userA,
+      displayName: "Alice",
+    });
+
+    // Test `_getProfileById`
+    const foundById = await userProfile._getProfileById({
+      profile: profileIdA as ID,
+    });
+    assertExists(foundById);
+    assertEquals(foundById.user, userA);
+
+    const notFoundById = await userProfile._getProfileById({
+      profile: "profile:fake" as ID,
+    });
+    assertEquals(notFoundById, null);
+
+    // Test `_getProfileByUser`
+    const foundByUser = await userProfile._getProfileByUser({ user: userA });
+    assertExists(foundByUser);
+    assertEquals(foundByUser._id, profileIdA);
+
+    const notFoundByUser = await userProfile._getProfileByUser({
+      user: userB,
+    });
+    assertEquals(notFoundByUser, null);
+  });
+});
+```

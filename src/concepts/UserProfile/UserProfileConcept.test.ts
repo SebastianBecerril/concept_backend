@@ -1,0 +1,173 @@
+import { assert, assertEquals, assertExists } from "jsr:@std/assert";
+import { testDb } from "@utils/database.ts";
+import { ID } from "@utils/types.ts";
+import UserProfileConcept from "./UserProfileConcept.ts";
+
+// Test suite for the UserProfile concept, following the testing roadmap.
+Deno.test("UserProfileConcept", async (t) => {
+  const [db, client] = await testDb();
+  const userProfile = new UserProfileConcept(db);
+
+  // Define mock IDs for testing purposes.
+  const userA = "user:Alice" as ID;
+  const userB = "user:Bob" as ID;
+
+  // Setup: Clear the database before running tests
+  await userProfile.profiles.deleteMany({});
+
+  try {
+    /**
+     * Testing the Concept Principle
+     * This test follows the core user story of the concept:
+     * a user creates a profile, updates it, and then deletes it.
+     */
+    await t.step("Principle: create, update, and view a profile", async () => {
+      // Clear database before this test
+      await userProfile.profiles.deleteMany({});
+      // 1. Create a profile for userA.
+      const createResult = await userProfile.createProfile({
+        user: userA,
+        displayName: "Alice",
+      });
+      assert(!("error" in createResult), "Profile creation should succeed");
+      const profileId = createResult.profile;
+      assertExists(profileId);
+
+      // 2. Verify the initial state of the created profile.
+      let profileSchema = await userProfile._getProfileById({
+        profile: profileId,
+      });
+      assertExists(profileSchema);
+      assertEquals(profileSchema.user, userA);
+      assertEquals(profileSchema.displayName, "Alice");
+      assertEquals(profileSchema.bio, undefined); // Initially unset
+
+      // 3. Update the profile's bio and thumbnail image.
+      await userProfile.updateBio({
+        profile: profileId,
+        newBio: "Software Developer",
+      });
+      await userProfile.updateThumbnailImage({
+        profile: profileId,
+        newThumbnailImageURL: "http://example.com/alice.png",
+      });
+
+      // 4. Verify the updates were applied correctly.
+      profileSchema = await userProfile._getProfileById({ profile: profileId });
+      assertExists(profileSchema);
+      assertEquals(profileSchema.bio, "Software Developer");
+      assertEquals(
+        profileSchema.thumbnailImageURL,
+        "http://example.com/alice.png",
+      );
+
+      // 5. Update the display name.
+      await userProfile.updateDisplayName({
+        profile: profileId,
+        newDisplayName: "Alice Smith",
+      });
+
+      // 6. Verify the display name update.
+      profileSchema = await userProfile._getProfileById({ profile: profileId });
+      assertEquals(profileSchema!.displayName, "Alice Smith");
+
+      // 7. Delete the profile.
+      const deleteResult = await userProfile.deleteProfile({
+        profile: profileId,
+      });
+      assert(!("error" in deleteResult), "Profile deletion should succeed");
+
+      // 8. Verify the profile has been deleted.
+      profileSchema = await userProfile._getProfileById({ profile: profileId });
+      assertEquals(profileSchema, null);
+    });
+
+    /**
+     * Testing Action Requirements (Failure and Edge Cases)
+     * This test ensures that the concept handles invalid inputs and states
+     * gracefully by returning appropriate errors, as defined by the `requires` clauses.
+     */
+    await t.step("Handles invalid inputs and unmet requirements", async () => {
+      // Clear database before this test
+      await userProfile.profiles.deleteMany({});
+      // Test `createProfile` requirements
+      let errorResult = await userProfile.createProfile({
+        user: userB,
+        displayName: "  ",
+      });
+      assert("error" in errorResult, "Should error on empty display name");
+      assertEquals(errorResult.error, "Display name cannot be empty.");
+
+      // Test for duplicate user profile creation
+      await userProfile.createProfile({ user: userA, displayName: "Alice" });
+      errorResult = await userProfile.createProfile({
+        user: userA,
+        displayName: "Alice Again",
+      });
+      assert("error" in errorResult, "Should error on duplicate user profile");
+      assertEquals(
+        errorResult.error,
+        "A profile for this user already exists.",
+      );
+
+      // Test updating a non-existent profile
+      const fakeProfileId = "profile:fake" as ID;
+      const updateError = await userProfile.updateBio({
+        profile: fakeProfileId,
+        newBio: "This should fail",
+      });
+      assert("error" in updateError, "Should error on non-existent profile");
+      assertEquals(updateError.error, "ID not found.");
+
+      // Test deleting a non-existent profile
+      const deleteError = await userProfile.deleteProfile({
+        profile: fakeProfileId,
+      });
+      assert("error" in deleteError, "Should error on non-existent profile");
+      assertEquals(deleteError.error, "ID not found.");
+    });
+
+    /**
+     * Testing Queries
+     * This test explicitly verifies that the query methods retrieve the correct data
+     * and handle cases where no data is found.
+     */
+    await t.step("Queries retrieve correct data", async () => {
+      // Clear database before this test
+      await userProfile.profiles.deleteMany({});
+      // Setup: Create a profile to query against.
+      const userProfileA = await userProfile.createProfile({
+        user: userA,
+        displayName: "Alice",
+      });
+      // Check if failed
+      assert("profile" in userProfileA, "Expected profile to be created");
+      const profileIdA = userProfileA.profile;
+
+      // Test `_getProfileById`
+      const foundById = await userProfile._getProfileById({
+        profile: profileIdA as ID,
+      });
+      assertExists(foundById);
+      assertEquals(foundById.user, userA);
+
+      const notFoundById = await userProfile._getProfileById({
+        profile: "profile:fake" as ID,
+      });
+      assertEquals(notFoundById, null);
+
+      // Test `_getProfileByUser`
+      const foundByUser = await userProfile._getProfileByUser({ user: userA });
+      assertExists(foundByUser);
+      assertEquals(foundByUser._id, profileIdA);
+
+      const notFoundByUser = await userProfile._getProfileByUser({
+        user: userB,
+      });
+      assertEquals(notFoundByUser, null);
+    });
+  } finally {
+    // Teardown: Close the database connection
+    await client.close();
+  }
+});
