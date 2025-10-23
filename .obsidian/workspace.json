@@ -13,26 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "design/concepts/UserAuthentication/implementation.md",
+                "file": "design/concepts/UserProfile/testing.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "testing"
+            }
+          },
+          {
+            "id": "6aa5c932d50c3b3a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "design/concepts/UserProfile/implementation.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
               "title": "implementation"
-            }
-          },
-          {
-            "id": "fadc10958cdb1590",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "design/concepts/UserAuthentication/UserAuthentication.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "UserAuthentication"
             }
           },
           {
@@ -255,41 +255,41 @@
   },
   "active": "c7f546cb94b8d8d3",
   "lastOpenFiles": [
-    "src/concepts/UserAuthentication/UserAuthenticationConcept.ts",
-    "src/concepts/UserAuthentication",
-    "src/concepts/LikertSurvey/UserAuthentication",
-    "context/design/concepts/UserAuthentication/implementation.md/20251022_001718.6bdd9636.md",
-    "context/design/concepts/UserAuthentication/implementation.md/steps/response.cdcab27c.md",
-    "context/design/concepts/UserAuthentication/implementation.md/20251022_001649.8ac52486.md",
-    "context/design/concepts/UserAuthentication/implementation.md/steps/implement.f7536c03.md",
-    "context/design/concepts/UserAuthentication/implementation.md/steps/_.3876b520.md",
-    "context/design/concepts/UserAuthentication/implementation.md/steps/_.db39d951.md",
-    "context/design/concepts/UserAuthentication/implementation.md/steps/_.331f5a1f.md",
-    "context/design/concepts/UserAuthentication/implementation.md/steps/_.04e090af.md",
-    "context/design/concepts/UserAuthentication/implementation.md/steps/Generic Parameters.087161ea.md",
-    "context/design/concepts/UserAuthentication/implementation.md/steps/approach.5df2171f.md",
-    "context/design/concepts/UserAuthentication/implementation.md/steps/_.b0364a7a.md",
-    "context/design/concepts/UserAuthentication/implementation.md/steps/_.3731a859.md",
-    "context/design/concepts/UserAuthentication/implementation.md/steps/_.3eb68380.md",
-    "context/design/concepts/UserAuthentication/implementation.md/steps",
-    "context/design/concepts/UserAuthentication/implementation.md",
-    "context/design/concepts/UserAuthentication",
-    "design/concepts/LikertSurvey/implementation.md",
-    "design/concepts/UserAuthentication/UserAuthentication.md",
-    "design/concepts/UserAuthentication/implementation.md",
+    "context/src/concepts/UserProfile/UserProfileConcept.test.ts/20251023_192845.2dfb0ed8.md",
+    "context/src/concepts/UserProfile/UserProfileConcept.test.ts/20251023_192047.3ae97bde.md",
+    "context/src/concepts/UserProfile/UserProfileConcept.test.ts/20251023_192040.6a52f0c0.md",
+    "context/src/concepts/UserProfile/UserProfileConcept.test.ts/20251023_132918.4b3788ae.md",
+    "context/src/concepts/UserProfile/UserProfileConcept.test.ts/20251023_132745.5cbd2532.md",
+    "context/src/concepts/UserProfile/UserProfileConcept.test.ts",
+    "context/design/concepts/UserProfile/testing.md/20251023_132228.96e232c6.md",
+    "context/design/concepts/UserProfile/testing.md/steps/file.31c63c42.md",
+    "context/design/concepts/UserProfile/testing.md/steps/response.6d76b65d.md",
+    "context/design/concepts/UserProfile/testing.md/20251023_132205.8fc5d30c.md",
+    "context/design/concepts/UserProfile/testing.md/steps/test.a734ca12.md",
+    "context/design/concepts/UserProfile/implementation.md/20251023_083357.539abca1.md",
+    "context/design/concepts/UserProfile/implementation.md/steps/approach.5df2171f.md",
+    "context/design/concepts/UserProfile/implementation.md/steps/Generic Parameters.087161ea.md",
+    "context/design/concepts/UserProfile/implementation.md/steps/question.f8a21a51.md",
+    "context/design/concepts/UserProfile/implementation.md/steps/_.04e090af.md",
+    "context/design/concepts/UserProfile/implementation.md/steps/_.331f5a1f.md",
+    "context/design/concepts/UserProfile/implementation.md/steps/_.b0364a7a.md",
+    "context/design/concepts/UserProfile/testing.md/20251023_131457.99bffefa.md",
+    "context/design/concepts/UserProfile/testing.md/steps/response.c725a212.md",
+    "context/design/concepts/UserProfile/testing.md/steps/_.3731a859.md",
+    "context/design/concepts/UserProfile/testing.md/steps/_.3eb68380.md",
+    "context/design/concepts/UserProfile/testing.md/steps",
+    "context/design/concepts/UserProfile/testing.md",
+    "design/concepts/UserProfile/implementation.md",
+    "design/concepts/UserProfile/testing.md",
+    "design/concepts/UserAuthentication/testing.md",
     "design/concepts/UserProfile/UserProfile.md",
-    "design/concepts/CommunityBoard/CommunityBoard.md",
-    "design/concepts/Community/Community.md",
-    "design/concepts/CourseCatalog/CourseCatalog.md",
-    "design/concepts/UserEnrollments/UserEnrollments.md",
-    "design/brainstorming/final-brainstorming.md",
-    "context/design/brainstorming/final-brainstorming.md/20251021_231204.41e65fa8.md",
-    "context/design/brainstorming/final-brainstorming.md/steps/response.7e76b8bf.md",
-    "context/design/brainstorming/final-brainstorming.md/steps",
-    "context/design/brainstorming/application-brainstorming.md/steps",
-    "context/design/brainstorming/individual-concept-brainstorming/user-concepts-brainstorming.md/steps",
-    "context/design/brainstorming/individual-concept-brainstorming/community-board-brainstorming.md/steps",
-    "context/design/brainstorming/individual-concept-brainstorming/user-enrollments-brainstorming.md/steps",
-    "context/design/brainstorming/individual-concept-brainstorming/community-brainstorming.md/steps"
+    "context/src/concepts/UserProfile/UserProfileConcept.ts",
+    "context/src/concepts/UserProfile",
+    "context/src/concepts/UserAuthentication/UserAuthenticationConcept.test.ts",
+    "context/src/concepts/UserAuthentication/UserAuthenticationConcept.ts",
+    "context/src/concepts/UserAuthentication",
+    "context/design/concepts/UserProfile/implementation.md/steps",
+    "context/design/concepts/UserProfile",
+    "src/concepts/UserProfile/UserProfileConcept.test.ts"
   ]
 }
