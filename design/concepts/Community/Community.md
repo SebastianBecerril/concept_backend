@@ -17,7 +17,7 @@
         *   a `joinDate` DateTime
 *   **actions**
     *   `createCommunity(name: String, description: String, creator: User): (community: Community)`
-        *   **requires** `name` is non-empty, a `Community` with `name` does not exist, `creator` exists
+        *   **requires** `name` and `description` are non-empty, a `Community` with `name` does not exist, `creator` exists
         *   **effect** creates a new `Community` with the given `name` and `description`, and adds `creator` as an `ADMIN` `Membership` to this `Community`
     *   `updateCommunityDetails(community: Community, newName: String, newDescription: String, requester: User): ()`
         *   **requires** `community` exists, `requester` is an `ADMIN` member of `community`

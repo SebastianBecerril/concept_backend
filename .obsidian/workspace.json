@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "design/concepts/UserProfile/testing.md",
+                "file": "design/concepts/Community/testing.md",
                 "mode": "source",
                 "source": false
               },
@@ -27,26 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "design/concepts/UserProfile/implementation.md",
+                "file": "design/concepts/CourseCatalog/testing.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "implementation"
-            }
-          },
-          {
-            "id": "ec86d0a94c5b39de",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "design/concepts/UserProfile/UserProfile.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "UserProfile"
+              "title": "testing"
             }
           },
           {
@@ -61,20 +47,6 @@
               },
               "icon": "lucide-file",
               "title": "CourseCatalog"
-            }
-          },
-          {
-            "id": "92b054aa7b287c45",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "design/concepts/Community/Community.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Community"
             }
           },
           {
@@ -104,8 +76,23 @@
               "icon": "lucide-file",
               "title": "CommunityBoard"
             }
+          },
+          {
+            "id": "47628514a6898004",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "design/brainstorming/individual-concept-brainstorming/course-catalog-brainstorming.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "course-catalog-brainstorming"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -253,43 +240,43 @@
       "bases:Create new base": false
     }
   },
-  "active": "c7f546cb94b8d8d3",
+  "active": "6aa5c932d50c3b3a",
   "lastOpenFiles": [
-    "context/src/concepts/UserProfile/UserProfileConcept.test.ts/20251023_192845.2dfb0ed8.md",
-    "context/src/concepts/UserProfile/UserProfileConcept.test.ts/20251023_192047.3ae97bde.md",
-    "context/src/concepts/UserProfile/UserProfileConcept.test.ts/20251023_192040.6a52f0c0.md",
-    "context/src/concepts/UserProfile/UserProfileConcept.test.ts/20251023_132918.4b3788ae.md",
-    "context/src/concepts/UserProfile/UserProfileConcept.test.ts/20251023_132745.5cbd2532.md",
-    "context/src/concepts/UserProfile/UserProfileConcept.test.ts",
-    "context/design/concepts/UserProfile/testing.md/20251023_132228.96e232c6.md",
-    "context/design/concepts/UserProfile/testing.md/steps/file.31c63c42.md",
-    "context/design/concepts/UserProfile/testing.md/steps/response.6d76b65d.md",
-    "context/design/concepts/UserProfile/testing.md/20251023_132205.8fc5d30c.md",
-    "context/design/concepts/UserProfile/testing.md/steps/test.a734ca12.md",
-    "context/design/concepts/UserProfile/implementation.md/20251023_083357.539abca1.md",
-    "context/design/concepts/UserProfile/implementation.md/steps/approach.5df2171f.md",
-    "context/design/concepts/UserProfile/implementation.md/steps/Generic Parameters.087161ea.md",
-    "context/design/concepts/UserProfile/implementation.md/steps/question.f8a21a51.md",
-    "context/design/concepts/UserProfile/implementation.md/steps/_.04e090af.md",
-    "context/design/concepts/UserProfile/implementation.md/steps/_.331f5a1f.md",
-    "context/design/concepts/UserProfile/implementation.md/steps/_.b0364a7a.md",
-    "context/design/concepts/UserProfile/testing.md/20251023_131457.99bffefa.md",
-    "context/design/concepts/UserProfile/testing.md/steps/response.c725a212.md",
-    "context/design/concepts/UserProfile/testing.md/steps/_.3731a859.md",
-    "context/design/concepts/UserProfile/testing.md/steps/_.3eb68380.md",
-    "context/design/concepts/UserProfile/testing.md/steps",
-    "context/design/concepts/UserProfile/testing.md",
-    "design/concepts/UserProfile/implementation.md",
-    "design/concepts/UserProfile/testing.md",
-    "design/concepts/UserAuthentication/testing.md",
-    "design/concepts/UserProfile/UserProfile.md",
-    "context/src/concepts/UserProfile/UserProfileConcept.ts",
-    "context/src/concepts/UserProfile",
-    "context/src/concepts/UserAuthentication/UserAuthenticationConcept.test.ts",
-    "context/src/concepts/UserAuthentication/UserAuthenticationConcept.ts",
-    "context/src/concepts/UserAuthentication",
-    "context/design/concepts/UserProfile/implementation.md/steps",
-    "context/design/concepts/UserProfile",
-    "src/concepts/UserProfile/UserProfileConcept.test.ts"
+    "context/design/concepts/CourseCatalog/testing.md/20251023_224446.7a8827c9.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/response.42946910.md",
+    "context/design/concepts/CourseCatalog/testing.md/20251023_224416.07a5ea1b.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/prompt.6159492e.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/file.ee6314dd.md",
+    "context/src/concepts/CourseCatalog/CourseCatalogConcept.test.ts/20251023_224331.ee6314dd.md",
+    "context/src/concepts/CourseCatalog/CourseCatalogConcept.test.ts/20251023_224307.47355450.md",
+    "context/src/concepts/CourseCatalog/CourseCatalogConcept.test.ts",
+    "context/design/concepts/CourseCatalog/testing.md/20251023_223900.03de0d8f.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/file.b8dbf644.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/trace.5dc451e6.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/response.1ab2fc4d.md",
+    "context/design/concepts/CourseCatalog/testing.md/20251023_223816.45a997cc.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/prompt.d1db42fd.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/file.247064d8.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/response.d80185bc.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/approach.5df2171f.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/_.b0364a7a.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/_.c9cd6acb.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/_.eb4d1820.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/approach.3e0d5a8f.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/_.ae61325b.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/_.3731a859.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps/_.3eb68380.md",
+    "context/design/concepts/CourseCatalog/testing.md/steps",
+    "context/design/concepts/CourseCatalog/testing.md",
+    "design/concepts/Community/testing.md",
+    "design/concepts/CourseCatalog/testing.md",
+    "context/design/concepts/CourseCatalog/implementation.md/steps",
+    "context/design/concepts/CourseCatalog",
+    "context/src/concepts/CourseCatalog/CourseCatalogConcept.ts",
+    "context/src/concepts/CourseCatalog",
+    "context/src/concepts/Community/CommunityConcept.test.ts",
+    "context/design/concepts/Community/testing.md/steps",
+    "context/design/concepts/Community/implementation.md/steps",
+    "context/design/concepts/Community"
   ]
 }
