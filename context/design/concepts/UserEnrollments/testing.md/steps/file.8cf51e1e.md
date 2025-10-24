@@ -1,6 +1,15 @@
+---
+timestamp: 'Thu Oct 23 2025 23:07:46 GMT-0400 (Eastern Daylight Time)'
+parent: '[[..\20251023_230746.9b6b6327.md]]'
+content_id: 8cf51e1e452b03a63d45b7b58a0f7383ecf7c91e5ed635c779d6b1eefa9bf111
+---
+
+# file: src/concepts/UserEnrollments/UserEnrollmentsConcept.test.ts
+
+```typescript
 import { assertEquals, assertExists, assert } from "jsr:@std/assert";
-import { testDb } from "@utils/database.ts";
-import { ID } from "@utils/types.ts";
+import { testDb } from "../../../utils/database.ts";
+import { ID } from "../../../utils/types.ts";
 import UserEnrollmentsConcept from "./UserEnrollmentsConcept.ts";
 
 Deno.test("UserEnrollmentsConcept", async (t) => {
@@ -166,3 +175,4 @@ Deno.test("UserEnrollmentsConcept", async (t) => {
   // Clean up the database connection
   await client.close();
 });
+```
