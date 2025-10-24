@@ -1,0 +1,179 @@
+---
+timestamp: 'Thu Oct 23 2025 20:09:53 GMT-0400 (Eastern Daylight Time)'
+parent: '[[..\20251023_200953.cd672cdf.md]]'
+content_id: 87df9fb89fc26a5c90342e1d54f9ef8eb3f1ed99b5b129b549fcc2d7a9f554f4
+---
+
+# file: src/concepts/Community/CommunityConcept.ts
+
+```typescript
+import { Collection, Db } from "npm:mongodb";
+import { Empty, ID } from "@utils/types.ts";
+import { freshID } from "@utils/database.ts";
+
+interface CommunitySchema {
+  _id: ID;
+  name: string;
+  description: string;
+  creationDate: Date;
+  memberships: ID[];
+}
+
+interface MembershipSchema {
+  _id: ID;
+  user: ID;
+  community: ID;
+  role: string;
+  joinDate: Date;
+}
+
+/**
+ * @concept Community
+ * @purpose Group users into distinct social or organizational units and manage their membership and roles.
+ * @principle After a user creates a community, they can invite other users to join as members and assign roles, enabling structured interaction within that unit.
+ */
+export default class CommunityConcept {
+  private static readonly PREFIX = "Community" + ".";
+
+  /**
+   * @state
+   * a set of Communities with
+   *   a `name` String
+   *   a `description` String
+   *   a `creationDate` DateTime
+   *   a `memberships` Array of Membership IDs
+   */
+  communities: Collection<CommunitySchema>;
+
+  /**
+   * @state
+   * a set of Memberships with
+   *   a `user` User
+   *   a `community` Community
+   *   a `role` String
+   *   a `joinDate` DateTime
+   */
+  memberships: Collection<MembershipSchema>;
+
+  constructor(private readonly db: Db) {
+    this.communities = this.db.collection(
+      CommunityConcept.PREFIX + "communities",
+    );
+    this.memberships = this.db.collection(
+      CommunityConcept.PREFIX + "memberships",
+    );
+
+    this.communities.createIndex({ name: 1 }, { unique: true })
+      .catch(console.error);
+    this.memberships.createIndex({ user: 1, community: 1 }, { unique: true })
+      .catch(console.error);
+  }
+
+  /**
+   * @action createCommunity
+   * @requires `name` and `description` are non-empty, a `Community` with `name` does not exist, `creator` exists
+   * @effects creates a new `Community` with the given `name` and `description`, and adds `creator` as an `ADMIN` `Membership` to this `Community`
+   * @param {string} name - The name of the community.
+   * @param {string} description - The description of the community.
+   * @param {ID} creator - The ID of the user creating the community.
+   * @returns {{ community: ID } | { error: string }} The ID of the new community or an error message.
+   */
+  async createCommunity({
+    name,
+    description,
+    creator,
+  }: {
+    name: string;
+    description: string;
+    creator: ID;
+  }): Promise<{ community: ID } | { error: string }> {
+    // Check if name and description are non-empty
+    if (!name.trim()) {
+      return { error: "Community name cannot be empty." };
+    }
+    if (!description.trim()) {
+      return { error: "Community description cannot be empty." };
+    }
+
+    // Check if a Community with this name already exists
+    const existingCommunity = await this.communities.findOne({ name });
+    if (existingCommunity) {
+      return { error: "A community with this name already exists." };
+    }
+
+    // Check that the creator exists
+    const creatorExists = await this.db.collection("UserAuthentication.users")
+      .findOne({ _id: creator });
+    if (!creatorExists) {
+      return { error: "Creator user does not exist." };
+    }
+
+    const communityId = freshID();
+    const membershipId = freshID();
+    const creationDate = new Date();
+
+    const newCommunity: CommunitySchema = {
+      _id: communityId,
+      name,
+      description,
+      creationDate,
+      memberships: [membershipId],
+    };
+
+    const newMembership: MembershipSchema = {
+      _id: membershipId,
+      user: creator,
+      community: communityId,
+      role: "ADMIN",
+      joinDate: creationDate,
+    };
+
+    try {
+      await this.communities.insertOne(newCommunity);
+      await this.memberships.insertOne(newMembership);
+      return { community: communityId };
+    } catch (e) {
+      console.error("Error creating community:", e);
+      return { error: "Failed to create community due to a system error." };
+    }
+  }
+}
+
+```
+
+### concept Community \[User]
+
+* **purpose**
+  Group users into distinct social or organizational units and manage their membership and roles.
+* **principle**
+  After a user creates a community, they can invite other users to join as members and assign roles, enabling structured interaction within that unit.
+* **state**
+  * a set of Communities with
+    * a `name` String
+    * a `description` String
+    * a `creationDate` DateTime
+    * a `memberships` set of Memberships
+  * a set of Memberships with
+    * a `user` User
+    * a `community` Community
+    * a `role` String
+    * a `joinDate` DateTime
+* **actions**
+  * `createCommunity(name: String, description: String, creator: User): (community: Community)`
+    * **requires** `name` and `description` are non-empty, a `Community` with `name` does not exist, `creator` exists
+    * **effect** creates a new `Community` with the given `name` and `description`, and adds `creator` as an `ADMIN` `Membership` to this `Community`
+  * `updateCommunityDetails(community: Community, newName: String, newDescription: String, requester: User): ()`
+    * **requires** `community` exists, `requester` is an `ADMIN` member of `community`
+    * **effect** updates the `name` and `description` of `community`
+  * `addMember(community: Community, user: User, inviter: User): ()`
+    * **requires** `community` exists, `user` exists, `inviter` exists, `user` is not already a member of `community`, `inviter` is an `ADMIN` member of `community`
+    * **effect** creates a `Membership` for `user` in `community` with `MEMBER` role
+  * `removeMember(community: Community, user: User, requester: User): ()`
+    * **requires** `community` exists, `user` is a member of `community`, (`requester` is an `ADMIN` member of `community` OR `requester` is `user`)
+    * **effect** removes the `Membership` of `user` from `community`
+  * `setMemberRole(membership: Membership, newRole: String, requester: User): ()`
+    * **requires** `membership` exists, `newRole` is valid, `requester` is an `ADMIN` member of `membership.community`, `requester` is not attempting to demote themselves from `ADMIN` to `MEMBER` (unless there is another `ADMIN`)
+    * **effect** updates `membership.role` to `newRole`
+  * `deleteCommunity(community: Community, requester: User): ()`
+    * **requires** `community` exists, `requester` is an `ADMIN` member of `community`
+    * **effect** removes `community` and all associated `Memberships`

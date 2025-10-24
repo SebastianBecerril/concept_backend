@@ -7,13 +7,11 @@
 *   **state**
     *   a set of Terms with
         *   a `name` String
-        *   a `courses` set of Courses
     *   a set of Courses with
         *   a `term` Term
         *   a `courseNumber` String
         *   a `courseName` String
         *   a `department` String
-        *   a `sections` set of Sections
     *   a set of Sections with
         *   a `course` Course
         *   a `classType` String
@@ -34,19 +32,19 @@
         *   **effect** Removes the `term` from the set.
     *   `createOrGetCourse(term: Term, courseNumber: String, courseName: String, department: String): (course: Course)`
         *   **requires** `term` exists.
-        *   **effect** If a `Course` with the exact `courseNumber` in `term` already exists, its `courseName` and `department` are updated to the provided values (to reflect the latest community consensus or input), and the existing `Course` is returned. Otherwise, creates a new `Course` associated with `term` and the provided details, and returns it. The new `Course` is also implicitly added to `term`'s `set of Courses`.
+        *   **effect** If a `Course` with the exact `courseNumber` in `term` already exists, its `courseName` and `department` are updated to the provided values (to reflect the latest community consensus or input), and the existing `Course` is returned. Otherwise, creates a new `Course` associated with `term` and the provided details, and returns it. 
     *   `updateCourseDetails(course: Course, newCourseNumber: String, newCourseName: String, newDepartment: String): ()`
         *   **requires** `course` exists, and if `newCourseNumber` is different from `course.courseNumber`, then no other `Course` in `course.term` has `newCourseNumber`.
         *   **effect** Updates the `courseNumber`, `courseName`, and `department` of `course`.
     *   `deleteCourse(course: Course): ()`
         *   **requires** `course` exists, and no `Section` belongs to `course`.
-        *   **effect** Removes the `course` from the set. Also implicitly removes `course` from `course.term`'s `set of Courses`.
+        *   **effect** Removes the `course` from the set. 
     *   `createOrGetSection(course: Course, classType: String, days: set of Strings, startTime: DateTime, endTime: DateTime, location: String, instructor: String): (section: Section)`
         *   **requires** `course` exists.
-        *   **effect** If an identical `Section` (matching all provided details) for `course` already exists, returns that `Section`. Otherwise, creates a new `Section` for `course` with the given details and returns it. The new `Section` is also implicitly added to `course`'s `set of Sections`.
+        *   **effect** If an identical `Section` (matching all provided details) for `course` already exists, returns that `Section`. Otherwise, creates a new `Section` for `course` with the given details and returns it. 
     *   `updateSectionDetails(section: Section, newClassType: String, newDays: set of Strings, newStartTime: DateTime, newEndTime: DateTime, newLocation: String, newInstructor: String): ()`
         *   **requires** `section` exists, and no other `Section` in `section.course` is identical to the section that would result from these updates.
         *   **effect** Updates the `classType`, `days`, `startTime`, `endTime`, `location`, and `instructor` of `section`.
     *   `deleteSection(section: Section): ()`
         *   **requires** `section` exists.
-        *   **effect** Removes the `section` from the set. Also implicitly removes `section` from `section.course`'s `set of Sections`.
+        *   **effect** Removes the `section` from the set. 
