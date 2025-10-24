@@ -1,3 +1,12 @@
+---
+timestamp: 'Thu Oct 23 2025 23:03:58 GMT-0400 (Eastern Daylight Time)'
+parent: '[[..\20251023_230358.3fdb6a80.md]]'
+content_id: 3d0dab57cb50bca085fcb88e1dbc5ed03f73bae8ba0f0a56bf4b73cda189c030
+---
+
+# file: src/concepts/UserEnrollments/UserEnrollmentsConcept.ts
+
+```typescript
 import { Collection, Db } from "npm:mongodb";
 import { Empty, ID } from "@utils/types.ts";
 import { freshID } from "@utils/database.ts";
@@ -258,3 +267,5 @@ export default class UserEnrollmentsConcept {
     return this.enrollments.find({}).toArray();
   }
 }
+
+```

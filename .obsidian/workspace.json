@@ -4,11 +4,25 @@
     "type": "split",
     "children": [
       {
-        "id": "bfc6fe452d3b612c",
+        "id": "88859616ac0aa22e",
         "type": "tabs",
         "children": [
           {
-            "id": "c7f546cb94b8d8d3",
+            "id": "4f15cdc881d226ad",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "context/design/concepts/CourseCatalog/implementation.md/20251023_215503.9f495759.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "20251023_215503.9f495759"
+            }
+          },
+          {
+            "id": "0429f8655ebbdb8d",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -22,77 +36,21 @@
             }
           },
           {
-            "id": "6aa5c932d50c3b3a",
+            "id": "f03c9222511abc0a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "design/concepts/CourseCatalog/testing.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "testing"
-            }
-          },
-          {
-            "id": "bcb95f1ac9240229",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "design/concepts/CourseCatalog/CourseCatalog.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "CourseCatalog"
-            }
-          },
-          {
-            "id": "f8a68138d21be51f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "design/concepts/UserEnrollments/UserEnrollments.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "UserEnrollments"
-            }
-          },
-          {
-            "id": "5ff2cba23cde7b86",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "design/concepts/CommunityBoard/CommunityBoard.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "CommunityBoard"
-            }
-          },
-          {
-            "id": "47628514a6898004",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "design/brainstorming/individual-concept-brainstorming/course-catalog-brainstorming.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "course-catalog-brainstorming"
+              "title": "README"
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -240,43 +198,43 @@
       "bases:Create new base": false
     }
   },
-  "active": "6aa5c932d50c3b3a",
+  "active": "f03c9222511abc0a",
   "lastOpenFiles": [
-    "context/design/concepts/CourseCatalog/testing.md/20251023_224446.7a8827c9.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/response.42946910.md",
-    "context/design/concepts/CourseCatalog/testing.md/20251023_224416.07a5ea1b.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/prompt.6159492e.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/file.ee6314dd.md",
-    "context/src/concepts/CourseCatalog/CourseCatalogConcept.test.ts/20251023_224331.ee6314dd.md",
-    "context/src/concepts/CourseCatalog/CourseCatalogConcept.test.ts/20251023_224307.47355450.md",
-    "context/src/concepts/CourseCatalog/CourseCatalogConcept.test.ts",
-    "context/design/concepts/CourseCatalog/testing.md/20251023_223900.03de0d8f.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/file.b8dbf644.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/trace.5dc451e6.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/response.1ab2fc4d.md",
-    "context/design/concepts/CourseCatalog/testing.md/20251023_223816.45a997cc.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/prompt.d1db42fd.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/file.247064d8.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/response.d80185bc.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/approach.5df2171f.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/_.b0364a7a.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/_.c9cd6acb.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/_.eb4d1820.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/approach.3e0d5a8f.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/_.ae61325b.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/_.3731a859.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps/_.3eb68380.md",
-    "context/design/concepts/CourseCatalog/testing.md/steps",
-    "context/design/concepts/CourseCatalog/testing.md",
+    "ApplicationDesign.md",
     "design/concepts/Community/testing.md",
+    "context/design/concepts/Community/testing.md/20251023_210733.55b8a554.md",
+    "context/design/concepts/CourseCatalog/implementation.md/20251023_215503.9f495759.md",
+    "context/design/concepts/CourseCatalog/implementation.md/20251023_215529.c173f119.md",
+    "context/design/concepts/CourseCatalog/implementation.md/20251023_220659.90413b00.md",
+    "context/design/concepts/CourseCatalog/implementation.md/20251023_220907.74520f3b.md",
+    "context/design/concepts/CourseCatalog/implementation.md/20251023_221024.b4fc2f04.md",
+    "context/design/concepts/CourseCatalog/implementation.md/20251023_223204.2ade1937.md",
+    "context/design/concepts/Community/testing.md/20251023_210638.e15b2189.md",
+    "context/design/concepts/Community/testing.md/20251023_205923.bde61ecf.md",
     "design/concepts/CourseCatalog/testing.md",
+    "context/design/concepts/Community/testing.md/20251023_205847.78890e2a.md",
+    "context/design/concepts/Community/implementation.md/20251023_201912.8016f23e.md",
+    "design/concepts/UserAuthentication/testing.md",
+    "design/concepts/UserProfile/testing.md",
+    "design/concepts/Community/implementation.md",
+    "context/design/concepts/Community/implementation.md/20251023_201704.e7825277.md",
+    "context/design/concepts/Community/implementation.md/20251023_201633.37c3f5aa.md",
+    "context/design/concepts/Community/implementation.md/20251023_201023.f5ed80eb.md",
+    "context/design/brainstorming/individual-concept-brainstorming/course-catalog-brainstorming.md/20251021_154642.84002535.md",
+    "design/concepts/Community/Community.md",
+    "design/brainstorming/application-brainstorming.md",
+    "design/brainstorming/individual-concept-brainstorming/course-catalog-brainstorming.md",
+    "README.md",
+    "context/design/brainstorming/individual-concept-brainstorming/course-catalog-brainstorming.md/20251021_153358.e6b4650a.md",
+    "context/design/concepts/UserEnrollments/testing.md/steps",
+    "context/src/concepts/UserEnrollments/UserEnrollmentsConcept.test.ts",
+    "context/design/concepts/UserEnrollments/implementation.md/steps",
+    "context/design/concepts/UserEnrollments",
+    "context/src/concepts/UserEnrollments/UserEnrollmentsConcept.ts",
+    "context/src/concepts/UserEnrollments",
+    "context/src/concepts/CourseCatalog/CourseCatalogConcept.test.ts",
+    "context/design/concepts/CourseCatalog/testing.md/steps",
     "context/design/concepts/CourseCatalog/implementation.md/steps",
-    "context/design/concepts/CourseCatalog",
-    "context/src/concepts/CourseCatalog/CourseCatalogConcept.ts",
-    "context/src/concepts/CourseCatalog",
-    "context/src/concepts/Community/CommunityConcept.test.ts",
-    "context/design/concepts/Community/testing.md/steps",
-    "context/design/concepts/Community/implementation.md/steps",
-    "context/design/concepts/Community"
+    "context/design/concepts/CourseCatalog"
   ]
 }
