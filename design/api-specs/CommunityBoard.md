@@ -1,24 +1,3 @@
-[@api-extraction-from-spec](api-extraction-from-spec.md)
-
-![@CommunityBoardConcept](../../src/concepts/CommunityBoard/CommunityBoardConcept.ts)
-
-[@CommunityBoard](../concepts/CommunityBoard/CommunityBoard.md)
-
-
-
-# Extracting from code
-
-The following is an explanation of how concepts are implemented, for the purposes of understanding how to extract an API.
-
-[@implementing-concepts](../background/implementing-concepts.md)
-
-# prompt: 
-
-Now, analyze the following Concept Implementation and generate the API documentation based on these instructions. It should be in Markdown format and I should be able to copy and paste it into its own file. I have provided both the spec and .ts implementation file
-
-
-# response:
-
 # API Specification: CommunityBoard Concept
 
 **Purpose:** Provide a shared forum for community members to post and discuss academic or community-related topics.

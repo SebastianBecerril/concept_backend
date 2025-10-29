@@ -13,44 +13,44 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "context/design/concepts/CourseCatalog/implementation.md/20251023_215503.9f495759.md",
+                "file": "design/concepts/CommunityBoard/implementation.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "20251023_215503.9f495759"
+              "title": "implementation"
             }
           },
           {
-            "id": "0429f8655ebbdb8d",
+            "id": "efde1e42b67f359f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "design/concepts/Community/testing.md",
+                "file": "design/tools/api-extraction-from-code.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "testing"
+              "title": "api-extraction-from-code"
             }
           },
           {
-            "id": "f03c9222511abc0a",
+            "id": "1f37532978b1724a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "design/tools/api-extraction-from-spec.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "api-extraction-from-spec"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -198,43 +198,43 @@
       "bases:Create new base": false
     }
   },
-  "active": "f03c9222511abc0a",
+  "active": "efde1e42b67f359f",
   "lastOpenFiles": [
-    "ApplicationDesign.md",
-    "design/concepts/Community/testing.md",
-    "context/design/concepts/Community/testing.md/20251023_210733.55b8a554.md",
-    "context/design/concepts/CourseCatalog/implementation.md/20251023_215503.9f495759.md",
-    "context/design/concepts/CourseCatalog/implementation.md/20251023_215529.c173f119.md",
-    "context/design/concepts/CourseCatalog/implementation.md/20251023_220659.90413b00.md",
-    "context/design/concepts/CourseCatalog/implementation.md/20251023_220907.74520f3b.md",
-    "context/design/concepts/CourseCatalog/implementation.md/20251023_221024.b4fc2f04.md",
-    "context/design/concepts/CourseCatalog/implementation.md/20251023_223204.2ade1937.md",
-    "context/design/concepts/Community/testing.md/20251023_210638.e15b2189.md",
-    "context/design/concepts/Community/testing.md/20251023_205923.bde61ecf.md",
-    "design/concepts/CourseCatalog/testing.md",
-    "context/design/concepts/Community/testing.md/20251023_205847.78890e2a.md",
-    "context/design/concepts/Community/implementation.md/20251023_201912.8016f23e.md",
-    "design/concepts/UserAuthentication/testing.md",
-    "design/concepts/UserProfile/testing.md",
-    "design/concepts/Community/implementation.md",
-    "context/design/concepts/Community/implementation.md/20251023_201704.e7825277.md",
-    "context/design/concepts/Community/implementation.md/20251023_201633.37c3f5aa.md",
-    "context/design/concepts/Community/implementation.md/20251023_201023.f5ed80eb.md",
-    "context/design/brainstorming/individual-concept-brainstorming/course-catalog-brainstorming.md/20251021_154642.84002535.md",
-    "design/concepts/Community/Community.md",
-    "design/brainstorming/application-brainstorming.md",
-    "design/brainstorming/individual-concept-brainstorming/course-catalog-brainstorming.md",
-    "README.md",
-    "context/design/brainstorming/individual-concept-brainstorming/course-catalog-brainstorming.md/20251021_153358.e6b4650a.md",
+    "context/design/tools/api-extraction-from-code.md/20251028_203837.80fd78a5.md",
+    "context/design/tools/api-extraction-from-code.md/steps/API Specification.c7a01fb1.md",
+    "context/design/tools/api-extraction-from-code.md/20251028_203804.4a29d2f4.md",
+    "context/design/tools/api-extraction-from-code.md/steps/file.e9ee3f56.md",
+    "context/src/concepts/CommunityBoard/CommunityBoardConcept.ts/20251028_203805.b74b3b03.md",
+    "context/design/tools/api-extraction-from-code.md/20251028_203632.7357aade.md",
+    "context/design/tools/api-extraction-from-code.md/steps/API Specification.24d9c86e.md",
+    "context/design/tools/api-extraction-from-code.md/20251028_203603.91732395.md",
+    "context/design/tools/api-extraction-from-code.md/steps/file.c2c6f1c6.md",
+    "context/design/tools/api-extraction-from-code.md/steps/prompt.bddcf36e.md",
+    "context/src/concepts/UserEnrollments/UserEnrollmentsConcept.ts/20251028_203603.c2c6f1c6.md",
+    "context/design/tools/api-extraction-from-code.md/20251028_203447.9dc0dd06.md",
+    "context/design/tools/api-extraction-from-code.md/steps/API Specification.4c773bd8.md",
+    "context/design/tools/api-extraction-from-code.md/20251028_203417.322337bc.md",
+    "context/design/tools/api-extraction-from-code.md/steps/file.c7d1042f.md",
+    "context/src/concepts/Community/CommunityConcept.ts/20251028_203417.b59b31a4.md",
+    "context/design/tools/api-extraction-from-code.md/20251028_203248.ca7d57d8.md",
+    "context/design/tools/api-extraction-from-code.md/steps/API Specification.3da795f5.md",
+    "context/design/tools/api-extraction-from-code.md/20251028_203212.37da9427.md",
+    "context/design/tools/api-extraction-from-code.md/steps/file.d423cee6.md",
+    "context/design/tools/api-extraction-from-code.md/steps/prompt.a2553358.md",
+    "context/src/concepts/CourseCatalog/CourseCatalogConcept.ts/20251028_203212.d423cee6.md",
+    "context/design/tools/api-extraction-from-code.md/20251028_203034.7f452dd5.md",
+    "context/design/tools/api-extraction-from-code.md/steps/API Specification.823ce4a5.md",
+    "context/design/tools/api-extraction-from-code.md/20251028_203010.81959702.md",
+    "context/design/tools/api-extraction-from-code.md/steps/file.3e8a2c1e.md",
+    "design/api-specs/UserAu",
+    "design/api-specs",
+    "context/design/concepts/CommunityBoard/implementation.md/steps",
+    "context/design/concepts/CommunityBoard",
+    "context/src/concepts/CommunityBoard/CommunityBoardConcept.ts",
+    "context/src/concepts/CommunityBoard",
     "context/design/concepts/UserEnrollments/testing.md/steps",
     "context/src/concepts/UserEnrollments/UserEnrollmentsConcept.test.ts",
     "context/design/concepts/UserEnrollments/implementation.md/steps",
-    "context/design/concepts/UserEnrollments",
-    "context/src/concepts/UserEnrollments/UserEnrollmentsConcept.ts",
-    "context/src/concepts/UserEnrollments",
-    "context/src/concepts/CourseCatalog/CourseCatalogConcept.test.ts",
-    "context/design/concepts/CourseCatalog/testing.md/steps",
-    "context/design/concepts/CourseCatalog/implementation.md/steps",
-    "context/design/concepts/CourseCatalog"
+    "context/design/concepts/UserEnrollments"
   ]
 }

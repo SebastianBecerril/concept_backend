@@ -1,29 +1,14 @@
-[@api-extraction-from-spec](api-extraction-from-spec.md)
-
-![@CommunityBoardConcept](../../src/concepts/CommunityBoard/CommunityBoardConcept.ts)
-
-[@CommunityBoard](../concepts/CommunityBoard/CommunityBoard.md)
-
-
-
-# Extracting from code
-
-The following is an explanation of how concepts are implemented, for the purposes of understanding how to extract an API.
-
-[@implementing-concepts](../background/implementing-concepts.md)
-
-# prompt: 
-
-Now, analyze the following Concept Implementation and generate the API documentation based on these instructions. It should be in Markdown format and I should be able to copy and paste it into its own file. I have provided both the spec and .ts implementation file
-
-
-# response:
+---
+timestamp: 'Tue Oct 28 2025 20:38:37 GMT-0400 (Eastern Daylight Time)'
+parent: '[[..\20251028_203837.80fd78a5.md]]'
+content_id: c7a01fb1d335f16729c11ae4f4a42eabd09be80d4bcc30539e5da5074886bed4
+---
 
 # API Specification: CommunityBoard Concept
 
 **Purpose:** Provide a shared forum for community members to post and discuss academic or community-related topics.
 
----
+***
 
 ## API Endpoints
 
@@ -32,17 +17,20 @@ Now, analyze the following Concept Implementation and generate the API documenta
 **Description:** Creates a new posting in a community authored by the user.
 
 **Requirements:**
-- `author` exists
-- `community` exists
-- `author` is a member of `community`
-- `body` is non-empty
-- `tags` are non-empty
-- `course` (if provided) exists
+
+* `author` exists
+* `community` exists
+* `author` is a member of `community`
+* `body` is non-empty
+* `tags` are non-empty
+* `course` (if provided) exists
 
 **Effects:**
-- Creates a new `Posting` in `community` authored by `author` with the given details.
+
+* Creates a new `Posting` in `community` authored by `author` with the given details.
 
 **Request Body:**
+
 ```json
 {
   "author": "string",
@@ -55,6 +43,7 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Success Response Body (Action):**
+
 ```json
 {
   "posting": "string"
@@ -62,27 +51,33 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Error Response Body:**
+
 ```json
 {
   "error": "string"
 }
 ```
----
+
+***
+
 ### POST /api/CommunityBoard/updatePost
 
 **Description:** Updates the content of an existing posting.
 
 **Requirements:**
-- `posting` exists
-- `requester` is `posting.author`
-- `newBody` is non-empty
-- `newTags` are non-empty
-- `newCourse` (if provided) exists
+
+* `posting` exists
+* `requester` is `posting.author`
+* `newBody` is non-empty
+* `newTags` are non-empty
+* `newCourse` (if provided) exists
 
 **Effects:**
-- Updates the `title`, `body`, `tags`, and `course` of `posting`.
+
+* Updates the `title`, `body`, `tags`, and `course` of `posting`.
 
 **Request Body:**
+
 ```json
 {
   "posting": "string",
@@ -95,31 +90,38 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Success Response Body (Action):**
+
 ```json
 {}
 ```
 
 **Error Response Body:**
+
 ```json
 {
   "error": "string"
 }
 ```
----
+
+***
+
 ### POST /api/CommunityBoard/replyToPost
 
 **Description:** Creates a new reply to a specific posting.
 
 **Requirements:**
-- `posting` exists
-- `author` exists
-- `author` is a member of `posting.community`
-- `body` is non-empty
+
+* `posting` exists
+* `author` exists
+* `author` is a member of `posting.community`
+* `body` is non-empty
 
 **Effects:**
-- Creates a new `Reply` on `posting` authored by `author`.
+
+* Creates a new `Reply` on `posting` authored by `author`.
 
 **Request Body:**
+
 ```json
 {
   "posting": "string",
@@ -129,6 +131,7 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Success Response Body (Action):**
+
 ```json
 {
   "reply": "string"
@@ -136,25 +139,31 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Error Response Body:**
+
 ```json
 {
   "error": "string"
 }
 ```
----
+
+***
+
 ### POST /api/CommunityBoard/updateReply
 
 **Description:** Updates the content of an existing reply.
 
 **Requirements:**
-- `reply` exists
-- `requester` is `reply.author`
-- `newBody` is non-empty
+
+* `reply` exists
+* `requester` is `reply.author`
+* `newBody` is non-empty
 
 **Effects:**
-- Updates the `body` of `reply`.
+
+* Updates the `body` of `reply`.
 
 **Request Body:**
+
 ```json
 {
   "reply": "string",
@@ -164,29 +173,36 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Success Response Body (Action):**
+
 ```json
 {}
 ```
 
 **Error Response Body:**
+
 ```json
 {
   "error": "string"
 }
 ```
----
+
+***
+
 ### POST /api/CommunityBoard/deletePost
 
 **Description:** Deletes a posting and all of its associated replies.
 
 **Requirements:**
-- `posting` exists
-- `requester` is `posting.author` OR `requester` is an `ADMIN` member of `posting.community`
+
+* `posting` exists
+* `requester` is `posting.author` OR `requester` is an `ADMIN` member of `posting.community`
 
 **Effects:**
-- Removes the `posting` and all its associated `Replies`.
+
+* Removes the `posting` and all its associated `Replies`.
 
 **Request Body:**
+
 ```json
 {
   "posting": "string",
@@ -195,29 +211,36 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Success Response Body (Action):**
+
 ```json
 {}
 ```
 
 **Error Response Body:**
+
 ```json
 {
   "error": "string"
 }
 ```
----
+
+***
+
 ### POST /api/CommunityBoard/deleteReply
 
 **Description:** Deletes a specific reply from a posting.
 
 **Requirements:**
-- `reply` exists
-- `requester` is `reply.author` OR `requester` is an `ADMIN` member of `reply.posting.community`
+
+* `reply` exists
+* `requester` is `reply.author` OR `requester` is an `ADMIN` member of `reply.posting.community`
 
 **Effects:**
-- Removes the `reply` from its `Posting`.
+
+* Removes the `reply` from its `Posting`.
 
 **Request Body:**
+
 ```json
 {
   "reply": "string",
@@ -226,28 +249,35 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Success Response Body (Action):**
+
 ```json
 {}
 ```
 
 **Error Response Body:**
+
 ```json
 {
   "error": "string"
 }
 ```
----
-### POST /api/CommunityBoard/_getPostById
+
+***
+
+### POST /api/CommunityBoard/\_getPostById
 
 **Description:** Retrieves a single post by its ID.
 
 **Requirements:**
-- None specified.
+
+* None specified.
 
 **Effects:**
-- None specified.
+
+* None specified.
 
 **Request Body:**
+
 ```json
 {
   "posting": "string"
@@ -255,6 +285,7 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Success Response Body (Query):**
+
 ```json
 [
   {
@@ -271,23 +302,29 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Error Response Body:**
+
 ```json
 {
   "error": "string"
 }
 ```
----
-### POST /api/CommunityBoard/_getRepliesForPost
+
+***
+
+### POST /api/CommunityBoard/\_getRepliesForPost
 
 **Description:** Retrieves all replies for a specific posting.
 
 **Requirements:**
-- None specified.
+
+* None specified.
 
 **Effects:**
-- None specified.
+
+* None specified.
 
 **Request Body:**
+
 ```json
 {
   "posting": "string"
@@ -295,6 +332,7 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Success Response Body (Query):**
+
 ```json
 [
   {
@@ -307,23 +345,29 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Error Response Body:**
+
 ```json
 {
   "error": "string"
 }
 ```
----
-### POST /api/CommunityBoard/_getPostsByCommunity
+
+***
+
+### POST /api/CommunityBoard/\_getPostsByCommunity
 
 **Description:** Retrieves all posts within a specific community.
 
 **Requirements:**
-- None specified.
+
+* None specified.
 
 **Effects:**
-- None specified.
+
+* None specified.
 
 **Request Body:**
+
 ```json
 {
   "community": "string"
@@ -331,6 +375,7 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Success Response Body (Query):**
+
 ```json
 [
   {
@@ -347,9 +392,11 @@ Now, analyze the following Concept Implementation and generate the API documenta
 ```
 
 **Error Response Body:**
+
 ```json
 {
   "error": "string"
 }
 ```
----
+
+***

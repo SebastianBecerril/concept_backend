@@ -1,3 +1,18 @@
+[@concept-design-overview](../../background/concept-design-overview.md)
+
+[@concept-specifications](../../background/concept-specifications.md)
+
+[@implementing-concepts](../../background/implementing-concepts.md)
+
+[@CommunityBoardConcept](/src/concepts/CommunityBoard/CommunityBoardConcept.ts)
+
+[@CommunityBoard](CommunityBoard.md)
+
+
+# implement: CommunityBoard
+# response:
+
+```typescript
 import { Collection, Db } from "npm:mongodb";
 import { freshID } from "@utils/database.ts";
 import { Empty, ID } from "@utils/types.ts";
@@ -300,3 +315,4 @@ export default class CommunityBoardConcept {
     return await this.postings.find({ community: community }).toArray();
   }
 }
+```

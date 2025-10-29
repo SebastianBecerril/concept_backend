@@ -1,3 +1,12 @@
+---
+timestamp: 'Tue Oct 28 2025 19:35:16 GMT-0400 (Eastern Daylight Time)'
+parent: '[[..\20251028_193516.f094a526.md]]'
+content_id: e8a5a14340813b185972f09d97e592e83c5c5b3e2a1066abf5a1beba5c8aef89
+---
+
+# response:
+
+```typescript
 import { Collection, Db } from "npm:mongodb";
 import { freshID } from "@utils/database.ts";
 import { Empty, ID } from "@utils/types.ts";
@@ -300,3 +309,4 @@ export default class CommunityBoardConcept {
     return await this.postings.find({ community: community }).toArray();
   }
 }
+```
