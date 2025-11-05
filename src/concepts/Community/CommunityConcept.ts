@@ -112,13 +112,19 @@ export default class CommunityConcept {
       joinDate: creationDate,
     };
 
+    // Use a transaction to ensure atomicity: both community and membership must be created together
+    const session = this.db.client.startSession();
     try {
-      await this.communities.insertOne(newCommunity);
-      await this.memberships.insertOne(newMembership);
+      await session.withTransaction(async () => {
+        await this.communities.insertOne(newCommunity, { session });
+        await this.memberships.insertOne(newMembership, { session });
+      });
       return { community: communityId };
     } catch (e) {
       console.error("Error creating community:", e);
       return { error: "Failed to create community due to a system error." };
+    } finally {
+      await session.endSession();
     }
   }
 

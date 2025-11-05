@@ -586,7 +586,9 @@ export default class CourseCatalogConcept {
    * @param {ID} course - The ID of the course to retrieve.
    * @returns {Promise<CourseSchema | null>} A promise that resolves to the course document or null if not found.
    */
-  async _getCourseById({ course }: { course: ID }): Promise<CourseSchema | null> {
+  async _getCourseById(
+    { course }: { course: ID },
+  ): Promise<CourseSchema | null> {
     return this.courses.findOne({ _id: course });
   }
 
@@ -595,11 +597,14 @@ export default class CourseCatalogConcept {
    * @param {ID} course - The ID of the course for which to retrieve sections.
    * @returns {Promise<SectionSchema[]>} A promise that resolves to an array of sections for the given course, sorted by class type and then start time.
    */
-  async _getSectionsForCourse({ course }: { course: ID }): Promise<SectionSchema[]> {
+  async _getSectionsForCourse(
+    { course }: { course: ID },
+  ): Promise<SectionSchema[]> {
     if (!course) {
       return [];
     }
-    return this.sections.find({ course }).sort({ classType: 1, startTime: 1 }).toArray();
+    return this.sections.find({ course }).sort({ classType: 1, startTime: 1 })
+      .toArray();
   }
 
   /**
@@ -607,8 +612,9 @@ export default class CourseCatalogConcept {
    * @param {ID} section - The ID of the section to retrieve.
    * @returns {Promise<SectionSchema | null>} A promise that resolves to the section document or null if not found.
    */
-  async _getSectionById({ section }: { section: ID }): Promise<SectionSchema | null> {
+  async _getSectionById(
+    { section }: { section: ID },
+  ): Promise<SectionSchema | null> {
     return this.sections.findOne({ _id: section });
   }
-
 }

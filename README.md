@@ -1,4 +1,9 @@
-# 6.104 Assignment 4: Implementing Concepts
+# 6.104 Assignment 4b: Implementing Frontend
+I have laid out the backend adjustments that I made in the following document:
+
+[Backend Design Changes for Assignment 4B](4B_DESIGN_CHANGES.md)
+
+# 6.104 Assignment 4a: Implementing Concepts
 
 In this assignment, you'll begin creating your backend by implementing your concepts in TypeScript. You'll learn to use Context, a simple CLI tool and a new way to both collaborate with LLMs and drive your implementation through design. Code is found in the src folder under their respective concept name and all of my brainstorming (which was a lot) is under the brainstorming folder in the design package. I hope this can contribute to both my incremental work and how my design changed from my original implementation. I still need to implement one more concept, but I will need more time for that.
 
