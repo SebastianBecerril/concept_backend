@@ -176,7 +176,7 @@ Queries always return an array of dictionaries so if the specification has this 
 \_query (a: A, b: B): (c: C)
 ```
 
-the implementation should return an array of dictionaries each with a field called `c`. For example, given this state
+the implementation should return an array of dictionaries each with a field called `c` the implementation should return an array of dictionaries each with a field called `c`. For example, given this state.
 
 ```
 	a set of Groups with

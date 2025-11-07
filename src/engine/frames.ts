@@ -347,5 +347,5 @@ export class Frames<TFrame extends Frame = Frame> extends Array<TFrame> {
     }
 
     return result;
-  }
+  }  
 }

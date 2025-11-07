@@ -4,53 +4,20 @@
     "type": "split",
     "children": [
       {
-        "id": "88859616ac0aa22e",
+        "id": "f254d392ce8d212e",
         "type": "tabs",
         "children": [
           {
-            "id": "4f15cdc881d226ad",
+            "id": "1078eeac1f1cbec5",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "design/concepts/UserEnrollments/testing.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "testing"
-            }
-          },
-          {
-            "id": "efde1e42b67f359f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "4B_DESIGN_CHANGES.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "4B_DESIGN_CHANGES"
-            }
-          },
-          {
-            "id": "1f37532978b1724a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "design/tools/api-extraction-from-spec.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "api-extraction-from-spec"
+              "title": "New tab"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -198,43 +165,43 @@
       "bases:Create new base": false
     }
   },
-  "active": "efde1e42b67f359f",
+  "active": "1078eeac1f1cbec5",
   "lastOpenFiles": [
-    "design/concepts/CommunityBoard/testing.md",
-    "4B_DESIGN_CHANGES.md",
-    "DESIGN_CHANGES.md",
-    "context/design/concepts/CommunityBoard/testing.md/20251104_193606.99eb9c10.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/trace.5eed4261.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/file.2209ab94.md",
-    "context/design/concepts/CommunityBoard/testing.md/20251104_193533.35c71440.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/prompt.e51d53e3.md",
-    "context/design/concepts/CommunityBoard/testing.md/20251104_193437.70d6da41.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/file.3f85816d.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/response.6d76b65d.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.db39d951.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.da164f86.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.ae61325b.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.a6edd866.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.9c81547e.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.920f4db7.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.90fe2e28.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.5da05fda.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.3eb68380.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.3a59af90.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.2086d81d.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.18488316.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/_.002819ee.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/response.e8a5a143.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps/prompt.867e20d8.md",
-    "context/design/concepts/CommunityBoard/testing.md/steps",
-    "design/api-specs/UserAu",
-    "design/api-specs",
-    "context/design/concepts/CommunityBoard/implementation.md/steps",
-    "context/design/concepts/CommunityBoard",
-    "context/src/concepts/CommunityBoard/CommunityBoardConcept.ts",
-    "context/src/concepts/CommunityBoard",
-    "context/design/concepts/UserEnrollments/testing.md/steps",
-    "context/src/concepts/UserEnrollments/UserEnrollmentsConcept.test.ts",
-    "context/design/concepts/UserEnrollments/implementation.md/steps"
+    "design/concepts/UserProfile/syncs.md",
+    "context/deno.json/20251028_005306.c2732493.md",
+    "context/design/concepts/UserProfile/syncs.md/20251107_205757.e9f14456.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/response.612414b8.md",
+    "context/design/concepts/UserProfile/syncs.md/20251107_205735.ca456b54.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/prompt.6227e6d3.md",
+    "context/design/concepts/UserProfile/syncs.md/20251107_205320.2689eff1.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/response.b7a7fe5e.md",
+    "context/design/concepts/UserProfile/syncs.md/20251107_205249.c7fc10db.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/prompt.14370042.md",
+    "context/design/concepts/UserProfile/syncs.md/20251107_203632.cc9f61cd.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/response.6addb601.md",
+    "context/design/concepts/UserProfile/syncs.md/20251107_203603.e8a6ef52.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/prompt.1d90e5e6.md",
+    "context/design/concepts/UserProfile/syncs.md/20251107_203426.b35cd265.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/response.e3f84a72.md",
+    "context/design/concepts/UserProfile/syncs.md/20251107_203352.59451820.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/prompt.b0f93796.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/file.a4fe3e09.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/file.dfbcac8f.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/file.4a2c0be9.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/file.7308c14a.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/file.6cdbd987.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/file.646c2f22.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/_.06558f62.md",
+    "context/design/concepts/UserProfile/syncs.md/steps/_.9b41d7d0.md",
+    "context/design/concepts/UserProfile/syncs.md/steps",
+    "context/src/syncs/userProfile.sync.ts",
+    "context/design/concepts/UserAuthentication/syncs.md/steps",
+    "context/src/syncs/userAuthentication.sync.ts",
+    "context/design/concepts/UserEnrollments/syncs.md/steps",
+    "context/src/syncs/userEnrollments.sync.ts",
+    "context/design/concepts/CourseCatalog/sync.md/steps",
+    "context/src/syncs/courseCatalog.sync.ts",
+    "src/syncs/userProfile.sync.ts",
+    "src/syncs/userEnrollments.sync.ts"
   ]
 }
