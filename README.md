@@ -1,3 +1,11 @@
+# 6.104 Assignment 4c: Finishing the Project
+
+## Assignment 4C: Final Deliverables
+
+- [Final Design Document](4C_FINAL_DESIGN_DOC.md)
+- [Final Reflection](4C_FINAL_REFLECTION.md)
+
+
 # 6.104 Assignment 4b: Implementing Frontend
 I have laid out the backend adjustments that I made in the following document:
 

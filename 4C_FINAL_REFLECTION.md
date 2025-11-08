@@ -1,0 +1,7 @@
+# Final Reflection
+
+Overall, this project was very hard and time consuming,. This was my first time coding a whole application from start to finish. While I have done small projects and internships in the past, I have always worked on the smaller part of a whole, and not the whole itself, so this was very eye opening. I would say it was very enjoyable, however, I did make many mistakes. Chief amongst these was my lack of time management due to personal issues that plagued me this semester. Most of my assignments were late, and I feel like my final submission is definitely as polished as it should be. After this, I would really like to take my time to polish out the final flaws and be able to fully complete this project to the image that I had initially conceived, 
+
+## A Thought on LLMs
+
+LLMs were basically life-changing for this project. I would say that what I got the most use out of them for was for quick iteration, and above all brainstorming,. The Context tool built for this class was so incredibly helpful, and I really loved just how much context I could give it and how customizable the prompts were. I basically used this tool as my design journal and it allowed to flesh out so much my ideas and see gaps in my thinking. Also, Cursor was very helpful in nto only my frontend, but also in taking care of 'grunt work' that is just very repetitive and not enjoyable. In conclusion, i think that LLMs are a great addition to this class that allowed me to put out a better product than I originally expected. 
