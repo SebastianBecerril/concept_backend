@@ -277,7 +277,7 @@ export default class CommunityBoardConcept {
     return {};
   }
 
-  // Potential queries for testing and application use
+  // Queries for testing and application use
   /**
    * _getPostById(posting: Posting): (post: PostingDoc)
    */
@@ -298,5 +298,13 @@ export default class CommunityBoardConcept {
    */
   async _getPostsByCommunity({ community }: { community: Community }): Promise<PostingDoc[]> {
     return await this.postings.find({ community: community }).toArray();
+  }
+
+  /**
+   * _getReplyById(reply: Reply): (reply: ReplyDoc)
+   */
+  async _getReplyById({ reply }: { reply: Reply }): Promise<ReplyDoc[]> {
+    const replyDoc = await this.replies.findOne({ _id: reply });
+    return replyDoc ? [replyDoc] : [];
   }
 }

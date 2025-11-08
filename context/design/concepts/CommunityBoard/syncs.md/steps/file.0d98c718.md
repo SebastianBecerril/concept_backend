@@ -1,0 +1,193 @@
+---
+timestamp: 'Fri Nov 07 2025 19:12:49 GMT-0500 (Eastern Standard Time)'
+parent: '[[..\20251107_191249.0b30ba6d.md]]'
+content_id: 0d98c718ca831b40a26e717bdbd6492341d966835c19640563b76e3ed51c1b98
+---
+
+# file: src/syncs/communityBoard.sync.ts
+
+```typescript
+import { Community, CommunityBoard, Requesting, UserAuthentication } from "@concepts";
+import { actions, Sync } from "@engine";
+import { ID } from "@utils/types.ts";
+
+// Define local types for casting, since we can't import from concept implementation files.
+type User = ID;
+type Community = ID;
+type Posting = ID;
+type Reply = ID;
+
+// =================================================================================================
+// Create Post
+// =================================================================================================
+
+export const CreatePostRequest: Sync = (
+  { request, session, user, community, title, body, tags, course, membership },
+) => ({
+  when: actions([
+    Requesting.request,
+    { path: "/api/CommunityBoard/createPost", session, community, title, body, tags, course },
+    { request },
+  ]),
+  where: async (frames) => {
+    frames = await frames.query(UserAuthentication._getUserForSession, { sessionId: session }, { user });
+    // Get all memberships for the community, which creates a frame for each member.
+    frames = await frames.query(Community._getMembershipsByCommunity, { community }, { membership });
+    // Filter down to the single frame (if any) where the member's user ID matches the authenticated user.
+    // If there is no match, the sync stops here because the resulting frames object will be empty.
+    return frames.filter(($) => ($[membership] as { user: User }).user === $[user]);
+  },
+  then: actions([
+    CommunityBoard.createPost,
+    { author: user, community, title, body, tags, course },
+  ]),
+});
+
+export const CreatePostResponse: Sync = ({ request, posting, error }) => ({
+  when: actions(
+    [Requesting.request, { path: "/api/CommunityBoard/createPost" }, { request }],
+    [CommunityBoard.createPost, {}, { posting, error }],
+  ),
+  then: actions([Requesting.respond, { request, posting, error }]),
+});
+
+// =================================================================================================
+// Update Post
+// =================================================================================================
+
+export const UpdatePostRequest: Sync = (
+  { request, session, user, post, posting, newTitle, newBody, newTags, newCourse },
+) => ({
+  when: actions([
+    Requesting.request,
+    { path: "/api/CommunityBoard/updatePost", session, posting, newTitle, newBody, newTags, newCourse },
+    { request },
+  ]),
+  where: async (frames) => {
+    // **IMPROVEMENT**: Pre-authorize by checking for authorship before calling the action.
+    frames = await frames.query(UserAuthentication._getUserForSession, { sessionId: session }, { user });
+    frames = await frames.query(CommunityBoard._getPostById, { posting }, { post });
+    return frames.filter(($) => ($[user] as User) === ($[post] as { author: User }).author);
+  },
+  then: actions([
+    CommunityBoard.updatePost,
+    { posting, newTitle, newBody, newTags, newCourse, requester: user },
+  ]),
+});
+
+export const UpdatePostResponse: Sync = ({ request, error }) => ({
+  when: actions(
+    [Requesting.request, { path: "/api/CommunityBoard/updatePost" }, { request }],
+    [CommunityBoard.updatePost, {}, { error }],
+  ),
+  then: actions([Requesting.respond, { request, error }]),
+});
+
+// =================================================================================================
+// Reply to Post
+// =================================================================================================
+
+export const ReplyToPostRequest: Sync = ({ request, session, user, posting, body, post, membership }) => ({
+  when: actions([
+    Requesting.request,
+    { path: "/api/CommunityBoard/replyToPost", session, posting, body },
+    { request },
+  ]),
+  where: async (frames) => {
+    frames = await frames.query(UserAuthentication._getUserForSession, { sessionId: session }, { user });
+    frames = await frames.query(CommunityBoard._getPostById, { posting }, { post });
+    const communityId = (frames[0]?.[post] as { community: Community })?.community;
+    // Note: The next line will naturally result in an empty Frames object if communityId is undefined.
+    frames = await frames.query(Community._getMembershipsByCommunity, { community: communityId }, { membership });
+    return frames.filter(($) => ($[membership] as { user: User }).user === $[user]);
+  },
+  then: actions([CommunityBoard.replyToPost, { posting, author: user, body }]),
+});
+
+export const ReplyToPostResponse: Sync = ({ request, reply, error }) => ({
+  when: actions(
+    [Requesting.request, { path: "/api/CommunityBoard/replyToPost" }, { request }],
+    [CommunityBoard.replyToPost, {}, { reply, error }],
+  ),
+  then: actions([Requesting.respond, { request, reply, error }]),
+});
+
+// =================================================================================================
+// Update Reply
+// =================================================================================================
+
+export const UpdateReplyRequest: Sync = ({ request, session, user, reply, replyDoc, newBody }) => ({
+  when: actions([
+    Requesting.request,
+    { path: "/api/CommunityBoard/updateReply", session, reply, newBody },
+    { request },
+  ]),
+  where: async (frames) => {
+    // **IMPROVEMENT**: Pre-authorize by checking for authorship before calling the action.
+    frames = await frames.query(UserAuthentication._getUserForSession, { sessionId: session }, { user });
+    frames = await frames.query(CommunityBoard._getReplyById, { reply }, { replyDoc });
+    return frames.filter(($) => ($[user] as User) === ($[replyDoc] as { author: User }).author);
+  },
+  then: actions([CommunityBoard.updateReply, { reply, newBody, requester: user }]),
+});
+
+export const UpdateReplyResponse: Sync = ({ request, error }) => ({
+  when: actions(
+    [Requesting.request, { path: "/api/CommunityBoard/updateReply" }, { request }],
+    [CommunityBoard.updateReply, {}, { error }],
+  ),
+  then: actions([Requesting.respond, { request, error }]),
+});
+
+// =================================================================================================
+// Delete Post
+// =================================================================================================
+
+export const DeleteOwnPostRequest: Sync = ({ request, session, user, posting, post }) => ({
+  when: actions([
+    Requesting.request,
+    { path: "/api/CommunityBoard/deletePost", session, posting },
+    { request },
+  ]),
+  where: async (frames) => {
+    frames = await frames.query(UserAuthentication._getUserForSession, { sessionId: session }, { user });
+    frames = await frames.query(CommunityBoard._getPostById, { posting }, { post });
+    return frames.filter(($) => $[user] === ($[post] as { author: User }).author);
+  },
+  then: actions([CommunityBoard.deletePost, { posting, requester: user }]),
+});
+
+export const DeletePostResponse: Sync = ({ request, error }) => ({
+  when: actions(
+    [Requesting.request, { path: "/api/CommunityBoard/deletePost" }, { request }],
+    [CommunityBoard.deletePost, {}, { error }],
+  ),
+  then: actions([Requesting.respond, { request, error }]),
+});
+
+// =================================================================================================
+// Delete Reply
+// =================================================================================================
+
+export const DeleteOwnReplyRequest: Sync = ({ request, session, user, reply, replyDoc }) => ({
+  when: actions([
+    Requesting.request,
+    { path: "/api/CommunityBoard/deleteReply", session, reply },
+    { request },
+  ]),
+  where: async (frames) => {
+    frames = await frames.query(UserAuthentication._getUserForSession, { sessionId: session }, { user });
+    frames = await frames.query(CommunityBoard._getReplyById, { reply }, { replyDoc });
+    return frames.filter(($) => ($[user] === ($[replyDoc] as { author: User }).author));
+  },
+  then: actions([CommunityBoard.deleteReply, { reply, requester: user }]),
+});
+
+export const DeleteReplyResponse: Sync = ({ request, error }) => ({
+  when: actions(
+    [Requesting.request, { path: "/api/CommunityBoard/deleteReply" }, { request }],
+    [CommunityBoard.deleteReply, {}, { error }],
+  ),
+  then: actions([Requesting.respond, { request, error }]),
+});
+```

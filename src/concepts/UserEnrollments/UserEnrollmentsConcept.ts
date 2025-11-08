@@ -188,14 +188,15 @@ export default class UserEnrollmentsConcept {
    * @query _getEnrollmentById
    * Retrieves an enrollment by its unique ID.
    * @param {ID} enrollment - The enrollment ID to query.
-   * @returns {EnrollmentSchema | null} The enrollment if found, otherwise null.
+   * @returns {EnrollmentSchema[]} An array containing the enrollment if found, otherwise an empty array.
    */
   async _getEnrollmentById({
     enrollment,
   }: {
     enrollment: ID;
-  }): Promise<EnrollmentSchema | null> {
-    return this.enrollments.findOne({ _id: enrollment });
+  }): Promise<EnrollmentSchema[]> {
+    const result = await this.enrollments.findOne({ _id: enrollment });
+    return result ? [result] : [];
   }
 
   /**

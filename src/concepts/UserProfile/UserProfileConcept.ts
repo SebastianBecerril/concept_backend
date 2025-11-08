@@ -163,12 +163,11 @@ export default class UserProfileConcept {
    * @param {ID} profile - The profile ID to query.
    * @returns {ProfileSchema | null} The profile if found, otherwise null.
    */
-  async _getProfileById({
-    profile,
-  }: {
-    profile: ID;
-  }): Promise<ProfileSchema | null> {
-    return this.profiles.findOne({ _id: profile });
+  async _getProfileById(
+    { profile }: { profile: ID },
+  ): Promise<ProfileSchema[]> {
+    const result = await this.profiles.findOne({ _id: profile });
+    return result ? [result] : [];
   }
 
   /**

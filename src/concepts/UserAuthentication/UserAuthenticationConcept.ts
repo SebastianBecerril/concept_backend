@@ -25,7 +25,6 @@ interface ActiveSessionSchema {
 export default class UserAuthenticationConcept {
   private static readonly PREFIX = "UserAuthentication" + ".";
 
-
   /**
    * @state
    * a set of Users with
@@ -47,12 +46,16 @@ export default class UserAuthenticationConcept {
 
   constructor(private readonly db: Db) {
     this.users = this.db.collection(UserAuthenticationConcept.PREFIX + "users");
-    this.activeSessions = this.db.collection(UserAuthenticationConcept.PREFIX + "activeSessions");
+    this.activeSessions = this.db.collection(
+      UserAuthenticationConcept.PREFIX + "activeSessions",
+    );
 
     this.users.createIndex({ username: 1 }, { unique: true })
       .catch(console.error);
     // Ensure index for expiry time for efficient cleanup
-    this.activeSessions.createIndex({ expiryTime: 1 }, { expireAfterSeconds: 0 })
+    this.activeSessions.createIndex({ expiryTime: 1 }, {
+      expireAfterSeconds: 0,
+    })
       .catch(console.error);
   }
 
@@ -149,7 +152,9 @@ export default class UserAuthenticationConcept {
    * @param {ID} sessionId - The session ID to terminate.
    * @returns {Empty | { error: string }} An empty object on success, or an error message.
    */
-  async logout({ sessionId }: { sessionId: ID }): Promise<Empty | { error: string }> {
+  async logout(
+    { sessionId }: { sessionId: ID },
+  ): Promise<Empty | { error: string }> {
     try {
       const result = await this.activeSessions.deleteOne({ _id: sessionId });
       if (result.deletedCount === 0) {
@@ -189,13 +194,15 @@ export default class UserAuthenticationConcept {
    * @param {ID} sessionId - The session ID to check.
    * @returns {{ user: ID } | Empty} The user ID if valid, otherwise an empty object.
    */
-  async _isValidSession({ sessionId }: { sessionId: ID }): Promise<{ user: ID } | Empty> {
-    const session = await this.activeSessions.findOne({ _id: sessionId });
-    if (session && session.expiryTime > new Date()) {
-      return { user: session.user };
-    }
-    return {};
+  async _isValidSession({ sessionId }: { sessionId: string }): Promise<{ user: ID }[]> {
+    const session = await this.activeSessions.findOne({
+      sessionId,
+      expiryTime: { $gt: new Date() },
+    });
+
+    return session ? [{ user: session.user }] : [];
   }
+
 
   /**
    * @query _getUserByUsername
@@ -203,11 +210,30 @@ export default class UserAuthenticationConcept {
    * @param {string} username - The username to query.
    * @returns {{ user: ID, registrationDate: Date } | Empty} User ID and registration date if found, otherwise empty.
    */
-  async _getUserByUsername({ username }: { username: string }): Promise<{ user: ID, registrationDate: Date } | Empty> {
+  async _getUserByUsername(
+    { username }: { username: string },
+  ): Promise<{ user: ID; registrationDate: Date } | Empty> {
     const user = await this.users.findOne({ username });
     if (user) {
       return { user: user._id, registrationDate: user.registrationDate };
     }
     return {};
+  }
+
+  /**
+   * @query _getUserForSession
+   * @requires `sessionId` matches an existing `ActiveSession` with a future `expiryTime`
+   * @effects returns the `user` associated with the active session
+   * @param {ID} sessionId - The session ID to look up.
+   * @returns {{ user: ID }[]} An array containing the user ID if the session is valid, otherwise empty.
+   */
+  async _getUserForSession(
+    { sessionId }: { sessionId: ID },
+  ): Promise<{ user: ID }[]> {
+    const session = await this.activeSessions.findOne({ _id: sessionId });
+    if (session && session.expiryTime > new Date()) {
+      return [{ user: session.user }];
+    }
+    return [];
   }
 }

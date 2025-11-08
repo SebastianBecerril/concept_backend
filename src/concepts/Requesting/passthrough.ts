@@ -4,47 +4,116 @@
  *
  * /{REQUESTING_BASE_URL}/{Concept name}/{action or query}
  *
- * to passthrough directly to the concept action or query.
- * This is a convenient and natural way to expose concepts to
- * the world, but should only be done intentionally for public
- * actions and queries.
+ * to passthrough directly to the concept action or query. This file
+ * allows you to explicitly configure this behavior.
  *
- * This file allows you to explicitly set inclusions and exclusions
- * for passthrough routes:
- * - inclusions: those that you can justify their inclusion
- * - exclusions: those to exclude, using Requesting routes instead
+ * - INCLUSIONS: Routes that are safe for direct, public access.
+ *   These are typically read-only queries. Each must have a justification.
+ *
+ * - EXCLUSIONS: Routes that MUST be handled by a synchronization.
+ *   This includes ALL actions that modify data and any queries that
+ *   require authentication or special authorization logic.
  */
 
 /**
  * INCLUSIONS
  *
- * Each inclusion must include a justification for why you think
- * the passthrough is appropriate (e.g. public query).
- *
- * inclusions = {"route": "justification"}
+ * These routes are deemed public and safe for direct access. The server
+ * will directly execute the corresponding concept query.
  */
-
 export const inclusions: Record<string, string> = {
-  // Feel free to delete these example inclusions
-  "/api/LikertSurvey/_getSurveyQuestions": "this is a public query",
-  "/api/LikertSurvey/_getSurveyResponses": "responses are public",
-  "/api/LikertSurvey/_getRespondentAnswers": "answers are visible",
-  "/api/LikertSurvey/submitResponse": "allow anyone to submit response",
-  "/api/LikertSurvey/updateResponse": "allow anyone to update their response",
+  // --- UserAuthentication ---
+  "/api/UserAuthentication/login": "Public endpoint for users to log in and create a session.",
+  "/api/UserAuthentication/register": "Public endpoint for new users to register an account.",
+
+  // --- UserProfile ---
+  "/api/UserProfile/_getProfileById": "Publicly view a user's profile by its ID.",
+  "/api/UserProfile/_getProfileByUser": "Publicly view a user's profile by their user ID.",
+
+  // --- Community ---
+  "/api/Community/_getAllCommunities": "Publicly list all available communities.",
+  "/api/Community/_getCommunityById": "Publicly view a single community's details.",
+  "/api/Community/_getMembershipById": "Publicly view the details of a single membership.",
+  "/api/Community/_getMembershipsByCommunity": "Publicly list the members of a specific community.",
+  "/api/Community/_getMembershipsByRole": "Publicly filter members of a community by their role.",
+  "/api/Community/_getMembershipsByUser": "Publicly list all memberships for a specific user.",
+  "/api/Community/_getAllMemberships": "Publicly list all memberships in the system.",
+
+  // --- CommunityBoard ---
+  "/api/CommunityBoard/_getPostById": "Publicly view a single post.",
+  "/api/CommunityBoard/_getPostsByCommunity": "Publicly list all posts within a community.",
+  "/api/CommunityBoard/_getRepliesForPost": "Publicly view all replies to a post.",
+  "/api/CommunityBoard/_getReplyById": "Publicly view a single reply.",
+
+  // --- CourseCatalog ---
+  "/api/CourseCatalog/_getTermById": "Publicly view a specific academic term.",
+  "/api/CourseCatalog/_getTerms": "Publicly list all academic terms.",
+  "/api/CourseCatalog/_getCourseById": "Publicly view a specific course.",
+  "/api/CourseCatalog/_getCoursesForTerm": "Publicly list all courses for a given term.",
+  "/api/CourseCatalog/_getSectionById": "Publicly view a specific course section.",
+  "/api/CourseCatalog/_getSectionsForCourse": "Publicly list all sections for a given course.",
+
+  "/api/UserEnrollments/_getEnrollmentsByOwner": "Query enrollments by owner - will be filtered by visibility in the application layer",
+  "/api/UserEnrollments/_getEnrollmentsByCourse": "Publicly list enrollments for a course",
+  "/api/UserEnrollments/_getEnrollmentsBySection": "Publicly list enrollments for a section",
+  "/api/UserEnrollments/_getVisibleEnrollments": "Publicly list all visible enrollments",
 };
 
 /**
  * EXCLUSIONS
  *
- * Excluded routes fall back to the Requesting concept, and will
- * instead trigger the normal Requesting.request action. As this
- * is the intended behavior, no justification is necessary.
- *
- * exclusions = ["route"]
+ * These routes are protected and will trigger a `Requesting.request` action
+ * instead of passing through. They MUST be handled by a synchronization.
  */
-
 export const exclusions: Array<string> = [
-  // Feel free to delete these example exclusions
-  "/api/LikertSurvey/createSurvey",
-  "/api/LikertSurvey/addQuestion",
+  // ALL actions are excluded because they modify state and require authentication.
+  // --- Community Actions ---
+  "/api/Community/addMember",
+  "/api/Community/createCommunity",
+  "/api/Community/deleteCommunity",
+  "/api/Community/removeMember",
+  "/api/Community/setMemberRole",
+  "/api/Community/updateCommunityDetails",
+
+  // --- CommunityBoard Actions ---
+  "/api/CommunityBoard/createPost",
+  "/api/CommunityBoard/deletePost",
+  "/api/CommunityBoard/deleteReply",
+  "/api/CommunityBoard/replyToPost",
+  "/api/CommunityBoard/updatePost",
+  "/api/CommunityBoard/updateReply",
+
+  // --- CourseCatalog Actions ---
+  "/api/CourseCatalog/createOrGetCourse",
+  "/api/CourseCatalog/createOrGetSection",
+  "/api/CourseCatalog/createOrGetTerm",
+  "/api/CourseCatalog/deleteCourse",
+  "/api/CourseCatalog/deleteSection",
+  "/api/CourseCatalog/deleteTerm",
+  "/api/CourseCatalog/updateCourseDetails",
+  "/api/CourseCatalog/updateSectionDetails",
+  "/api/CourseCatalog/updateTermName",
+
+  // --- UserAuthentication Actions & Sensitive Queries ---
+  "/api/UserAuthentication/logout",
+  "/api/UserAuthentication/invalidateExpiredSessions", // System action
+  "/api/UserAuthentication/_getUserByUsername", // Sensitive query, might reveal user existence
+  "/api/UserAuthentication/_isValidSession", // Internal-only security check
+  "/api/UserAuthentication/_getUserForSession", // Internal-only authorization query for use in syncs
+
+  // --- UserEnrollments ---
+  "/api/UserEnrollments/addEnrollment",
+  "/api/UserEnrollments/removeEnrollment",
+  "/api/UserEnrollments/setEnrollmentVisibility",
+  "/api/UserEnrollments/updateCourseSection",
+  "/api/UserEnrollments/_getAllEnrollments",
+  "/api/UserEnrollments/_getEnrollmentById",
+
+
+  // --- UserProfile Actions ---
+  "/api/UserProfile/createProfile",
+  "/api/UserProfile/deleteProfile",
+  "/api/UserProfile/updateBio",
+  "/api/UserProfile/updateDisplayName",
+  "/api/UserProfile/updateThumbnailImage",
 ];

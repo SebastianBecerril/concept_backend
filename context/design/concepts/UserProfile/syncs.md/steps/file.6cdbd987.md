@@ -1,0 +1,279 @@
+---
+timestamp: 'Fri Nov 07 2025 20:33:52 GMT-0500 (Eastern Standard Time)'
+parent: '[[..\20251107_203352.59451820.md]]'
+content_id: 6cdbd987f670e2f47d68add30ddab1c4ed9047b44afe8d3d252da98f6bcc6ca6
+---
+
+# file: src\syncs\userEnrollments.sync.ts
+
+```typescript
+import { Requesting, UserAuthentication, UserEnrollments } from "@concepts";
+import { actions, Frames, Sync } from "@engine";
+import { ID } from "@utils/types.ts";
+
+// --- ADD ENROLLMENT ---
+
+/**
+ * @sync AddEnrollmentRequest
+ * Handles a request to add a new course enrollment for the authenticated user.
+ */
+export const AddEnrollmentRequest: Sync = (
+  { request, sessionId, course, section, visibility, user },
+) => ({
+  when: actions([
+    Requesting.request,
+    { path: "/UserEnrollments/addEnrollment", sessionId, course, section, visibility },
+    { request },
+  ]),
+  where: (frames) =>
+    frames.query(UserAuthentication._isValidSession, { sessionId }, { user }),
+  then: actions([UserEnrollments.addEnrollment, {
+    owner: user,
+    course,
+    section,
+    visibility,
+  }]),
+});
+
+/**
+ * @sync AddEnrollmentResponse
+ * Responds to the client after a successful enrollment creation.
+ */
+export const AddEnrollmentResponse: Sync = ({ request, enrollment }) => ({
+  when: actions(
+    [Requesting.request, { path: "/UserEnrollments/addEnrollment" }, { request }],
+    [UserEnrollments.addEnrollment, {}, { enrollment }],
+  ),
+  then: actions([Requesting.respond, { request, enrollment }]),
+});
+
+/**
+ * @sync AddEnrollmentErrorResponse
+ * Responds to the client if adding an enrollment failed.
+ */
+export const AddEnrollmentErrorResponse: Sync = ({ request, error }) => ({
+  when: actions(
+    [Requesting.request, { path: "/UserEnrollments/addEnrollment" }, { request }],
+    [UserEnrollments.addEnrollment, {}, { error }],
+  ),
+  then: actions([Requesting.respond, { request, error }]),
+});
+
+// --- UPDATE COURSE SECTION ---
+
+/**
+ * @sync UpdateCourseSectionRequest
+ * Handles a request to update the section for an existing enrollment,
+ * verifying that the requester owns the enrollment.
+ */
+export const UpdateCourseSectionRequest: Sync = (
+  { request, sessionId, enrollment, newSection, user, enrollmentRecord },
+) => ({
+  when: actions([
+    Requesting.request,
+    { path: "/UserEnrollments/updateCourseSection", sessionId, enrollment, newSection },
+    { request },
+  ]),
+  where: async (frames) => {
+    frames = await frames.query(UserAuthentication._isValidSession, { sessionId }, { user });
+    frames = await frames.query(UserEnrollments._getEnrollmentById, { enrollment }, { enrollmentRecord });
+    return frames.filter(($) => {
+      const record = $[enrollmentRecord] as { owner: ID } | undefined;
+      return record !== undefined && record.owner === $[user];
+    });
+  },
+  then: actions([UserEnrollments.updateCourseSection, { enrollment, newSection }]),
+});
+
+/**
+ * @sync UpdateCourseSectionResponse
+ * Responds to the client after successfully updating an enrollment's section.
+ */
+export const UpdateCourseSectionResponse: Sync = ({ request }) => ({
+  when: actions(
+    [Requesting.request, { path: "/UserEnrollments/updateCourseSection" }, { request }],
+    [UserEnrollments.updateCourseSection, {}, {}], // Success is an empty object
+  ),
+  then: actions([Requesting.respond, { request, status: "success" }]),
+});
+
+/**
+ * @sync UpdateCourseSectionErrorResponse
+ * Responds to the client if updating the section failed.
+ */
+export const UpdateCourseSectionErrorResponse: Sync = ({ request, error }) => ({
+  when: actions(
+    [Requesting.request, { path: "/UserEnrollments/updateCourseSection" }, { request }],
+    [UserEnrollments.updateCourseSection, {}, { error }],
+  ),
+  then: actions([Requesting.respond, { request, error }]),
+});
+
+// --- SET ENROLLMENT VISIBILITY ---
+
+/**
+ * @sync SetEnrollmentVisibilityRequest
+ * Handles a request to change an enrollment's visibility, verifying ownership.
+ */
+export const SetEnrollmentVisibilityRequest: Sync = (
+  { request, sessionId, enrollment, newVisibility, user, enrollmentRecord },
+) => ({
+  when: actions([
+    Requesting.request,
+    { path: "/UserEnrollments/setEnrollmentVisibility", sessionId, enrollment, newVisibility },
+    { request },
+  ]),
+  where: async (frames) => {
+    frames = await frames.query(UserAuthentication._isValidSession, { sessionId }, { user });
+    frames = await frames.query(UserEnrollments._getEnrollmentById, { enrollment }, { enrollmentRecord });
+    return frames.filter(($) => {
+      const record = $[enrollmentRecord] as { owner: ID } | undefined;
+      return record !== undefined && record.owner === $[user];
+    });
+  },
+  then: actions([UserEnrollments.setEnrollmentVisibility, { enrollment, newVisibility }]),
+});
+
+/**
+ * @sync SetEnrollmentVisibilityResponse
+ * Responds to the client after successfully updating visibility.
+ */
+export const SetEnrollmentVisibilityResponse: Sync = ({ request }) => ({
+  when: actions(
+    [Requesting.request, { path: "/UserEnrollments/setEnrollmentVisibility" }, { request }],
+    [UserEnrollments.setEnrollmentVisibility, {}, {}],
+  ),
+  then: actions([Requesting.respond, { request, status: "success" }]),
+});
+
+/**
+ * @sync SetEnrollmentVisibilityErrorResponse
+ * Responds to the client if updating visibility failed.
+ */
+export const SetEnrollmentVisibilityErrorResponse: Sync = ({ request, error }) => ({
+  when: actions(
+    [Requesting.request, { path: "/UserEnrollments/setEnrollmentVisibility" }, { request }],
+    [UserEnrollments.setEnrollmentVisibility, {}, { error }],
+  ),
+  then: actions([Requesting.respond, { request, error }]),
+});
+
+// --- REMOVE ENROLLMENT ---
+
+/**
+ * @sync RemoveEnrollmentRequest
+ * Handles a request to delete an enrollment, verifying ownership.
+ */
+export const RemoveEnrollmentRequest: Sync = (
+  { request, sessionId, enrollment, user, enrollmentRecord },
+) => ({
+  when: actions([
+    Requesting.request,
+    { path: "/UserEnrollments/removeEnrollment", sessionId, enrollment },
+    { request },
+  ]),
+  where: async (frames) => {
+    frames = await frames.query(UserAuthentication._isValidSession, { sessionId }, { user });
+    frames = await frames.query(UserEnrollments._getEnrollmentById, { enrollment }, { enrollmentRecord });
+    return frames.filter(($) => {
+      const record = $[enrollmentRecord] as { owner: ID } | undefined;
+      return record !== undefined && record.owner === $[user];
+    });
+  },
+  then: actions([UserEnrollments.removeEnrollment, { enrollment }]),
+});
+
+/**
+ * @sync RemoveEnrollmentResponse
+ * Responds to the client after successfully removing an enrollment.
+ */
+export const RemoveEnrollmentResponse: Sync = ({ request }) => ({
+  when: actions(
+    [Requesting.request, { path: "/UserEnrollments/removeEnrollment" }, { request }],
+    [UserEnrollments.removeEnrollment, {}, {}],
+  ),
+  then: actions([Requesting.respond, { request, status: "success" }]),
+});
+
+/**
+ * @sync RemoveEnrollmentErrorResponse
+ * Responds to the client if removing an enrollment failed.
+ */
+export const RemoveEnrollmentErrorResponse: Sync = ({ request, error }) => ({
+  when: actions(
+    [Requesting.request, { path: "/UserEnrollments/removeEnrollment" }, { request }],
+    [UserEnrollments.removeEnrollment, {}, { error }],
+  ),
+  then: actions([Requesting.respond, { request, error }]),
+});
+
+// --- GET MY ENROLLMENTS ---
+
+/**
+ * @sync GetMyEnrollmentsRequest
+ * Handles a request for an authenticated user to fetch all of their own enrollments.
+ * This introduces a custom, more intuitive route `/my-enrollments` instead of exposing the query name.
+ */
+export const GetMyEnrollmentsRequest: Sync = (
+  { request, sessionId, user, enrollment, enrollments },
+) => ({
+  when: actions([
+    Requesting.request,
+    { path: "/my-enrollments", sessionId },
+    { request },
+  ]),
+  where: async (frames) => {
+    const originalFrame = frames[0];
+    frames = await frames.query(UserAuthentication._isValidSession, { sessionId }, { user });
+    if (frames.length === 0) { // Authentication failed
+      return new Frames({ ...originalFrame, [enrollments]: { error: "Invalid session" } });
+    }
+    frames = await frames.query(UserEnrollments._getEnrollmentsByOwner, { owner: user }, { enrollment });
+    if (frames.length === 0) { // User has no enrollments, which is not an error
+      return new Frames({ ...originalFrame, [enrollments]: [] });
+    }
+    return frames.collectAs([enrollment], enrollments);
+  },
+  then: actions([Requesting.respond, { request, enrollments }]),
+});
+
+// --- GET VISIBLE ENROLLMENTS FOR A USER ---
+
+/**
+ * @sync GetVisibleEnrollmentsForUserRequest
+ * Handles a request to view another user's public enrollments.
+ * Requires authentication to perform the action but allows viewing any user's public data.
+ */
+export const GetVisibleEnrollmentsForUserRequest: Sync = (
+  { request, sessionId, owner, enrollment, enrollments },
+) => ({
+  when: actions([
+    Requesting.request,
+    { path: "/view-enrollments", sessionId, owner }, // e.g., /api/view-enrollments?owner=...
+    { request },
+  ]),
+  where: async (frames) => {
+    const originalFrame = frames[0];
+    // First, verify the requester has a valid session
+    const authFrames = await frames.query(UserAuthentication._isValidSession, { sessionId }, {});
+    if (authFrames.length === 0) {
+      return new Frames({ ...originalFrame, [enrollments]: { error: "Authentication required to view enrollments." } });
+    }
+
+    // Now, query for the target owner's enrollments using the original frame
+    let enrollmentFrames = await frames.query(UserEnrollments._getEnrollmentsByOwner, { owner }, { enrollment });
+    
+    // Filter for visibility
+    enrollmentFrames = enrollmentFrames.filter(($) => {
+      const record = $[enrollment] as { visibility: boolean } | undefined;
+      return record !== undefined && record.visibility === true;
+    });
+
+    if (enrollmentFrames.length === 0) {
+      return new Frames({ ...originalFrame, [enrollments]: [] });
+    }
+    return enrollmentFrames.collectAs([enrollment], enrollments);
+  },
+  then: actions([Requesting.respond, { request, enrollments }]),
+});
+```

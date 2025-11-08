@@ -1,0 +1,271 @@
+---
+timestamp: 'Fri Nov 07 2025 19:35:53 GMT-0500 (Eastern Standard Time)'
+parent: '[[..\20251107_193553.3d310ae4.md]]'
+content_id: c2c6f1c61b2c2bbe0503d1fc658a485dce3efb4b22918445fdfced45636ac24f
+---
+
+# file: src\concepts\UserEnrollments\UserEnrollmentsConcept.ts
+
+```typescript
+import { Collection, Db } from "npm:mongodb";
+import { Empty, ID } from "@utils/types.ts";
+import { freshID } from "@utils/database.ts";
+import { MongoServerError } from "npm:mongodb";
+
+interface EnrollmentSchema {
+  _id: ID;
+  owner: ID;
+  course: ID;
+  section: ID;
+  visibility: boolean;
+}
+
+/**
+ * @concept UserEnrollments
+ * @purpose Enable users to declare and manage their enrollment in specific course sections and control its visibility to other members in their communities.
+ * @principle After a user adds an enrollment, their registered courses and sections can be viewed by other community members, subject to visibility settings.
+ */
+export default class UserEnrollmentsConcept {
+  private static readonly PREFIX = "UserEnrollments" + ".";
+
+  /**
+   * @state
+   * a set of Enrollments with
+   *   an `owner` User
+   *   a `course` Course
+   *   a `section` Section
+   *   a `visibility` flag
+   */
+  enrollments: Collection<EnrollmentSchema>;
+
+  constructor(private readonly db: Db) {
+    this.enrollments = this.db.collection(
+      UserEnrollmentsConcept.PREFIX + "enrollments",
+    );
+
+    this.enrollments.createIndex({ owner: 1, course: 1 }, { unique: true })
+      .catch(console.error);
+  }
+
+  /**
+   * @action addEnrollment
+   * @requires `owner` exists, `course` exists, `section` exists, and no `Enrollment` for `owner` in `course` exists
+   * @effects creates a new `Enrollment` for `owner` for `course` with `section` and `visibility`
+   * @param {ID} owner - The ID of the user creating the enrollment.
+   * @param {ID} course - The ID of the course to enroll in.
+   * @param {ID} section - The ID of the section to enroll in.
+   * @param {boolean} visibility - The visibility setting for the enrollment.
+   * @returns {{ enrollment: ID } | { error: string }} The ID of the new enrollment or an error message.
+   */
+  async addEnrollment({
+    owner,
+    course,
+    section,
+    visibility,
+  }: {
+    owner: ID;
+    course: ID;
+    section: ID;
+    visibility: boolean;
+  }): Promise<{ enrollment: ID } | { error: string }> {
+    const enrollmentId = freshID();
+
+    try {
+      await this.enrollments.insertOne({
+        _id: enrollmentId,
+        owner,
+        course,
+        section,
+        visibility,
+      });
+      return { enrollment: enrollmentId };
+    } catch (e) {
+      if (e instanceof MongoServerError && e.code === 11000) {
+        return { error: "User is already enrolled in this course." };
+      }
+      console.error("Error creating enrollment:", e);
+      return { error: "Failed to create enrollment due to a system error." };
+    }
+  }
+
+  /**
+   * @action updateCourseSection
+   * @requires `enrollment` exists, `newSection` exists
+   * @effects updates `enrollment.section` to `newSection`
+   * @param {ID} enrollment - The ID of the enrollment to update.
+   * @param {ID} newSection - The ID of the new section.
+   * @returns {Empty | { error: string }} An empty object on success, or an error message.
+   */
+  async updateCourseSection({
+    enrollment,
+    newSection,
+  }: {
+    enrollment: ID;
+    newSection: ID;
+  }): Promise<Empty | { error: string }> {
+    // Check if enrollment exists
+    const existingEnrollment = await this.enrollments.findOne({
+      _id: enrollment,
+    });
+    if (!existingEnrollment) {
+      return { error: "Enrollment does not exist." };
+    }
+
+    try {
+      await this.enrollments.updateOne(
+        { _id: enrollment },
+        { $set: { section: newSection } },
+      );
+      return {};
+    } catch (e) {
+      console.error("Error updating course section:", e);
+      return {
+        error: "Failed to update course section due to a system error.",
+      };
+    }
+  }
+
+  /**
+   * @action setEnrollmentVisibility
+   * @requires `enrollment` exists, `newVisibility` is valid
+   * @effects updates `enrollment.visibility` to `newVisibility`
+   * @param {ID} enrollment - The ID of the enrollment to update.
+   * @param {boolean} newVisibility - The new visibility setting.
+   * @returns {Empty | { error: string }} An empty object on success, or an error message.
+   */
+  async setEnrollmentVisibility({
+    enrollment,
+    newVisibility,
+  }: {
+    enrollment: ID;
+    newVisibility: boolean;
+  }): Promise<Empty | { error: string }> {
+    // Check if enrollment exists
+    const existingEnrollment = await this.enrollments.findOne({
+      _id: enrollment,
+    });
+    if (!existingEnrollment) {
+      return { error: "Enrollment does not exist." };
+    }
+
+    try {
+      await this.enrollments.updateOne(
+        { _id: enrollment },
+        { $set: { visibility: newVisibility } },
+      );
+      return {};
+    } catch (e) {
+      console.error("Error updating enrollment visibility:", e);
+      return {
+        error: "Failed to update enrollment visibility due to a system error.",
+      };
+    }
+  }
+
+  /**
+   * @action removeEnrollment
+   * @requires `enrollment` exists
+   * @effects deletes the `enrollment`
+   * @param {ID} enrollment - The ID of the enrollment to remove.
+   * @returns {Empty | { error: string }} An empty object on success, or an error message.
+   */
+  async removeEnrollment({
+    enrollment,
+  }: {
+    enrollment: ID;
+  }): Promise<Empty | { error: string }> {
+    // Check if enrollment exists
+    const existingEnrollment = await this.enrollments.findOne({
+      _id: enrollment,
+    });
+    if (!existingEnrollment) {
+      return { error: "Enrollment does not exist." };
+    }
+
+    try {
+      await this.enrollments.deleteOne({ _id: enrollment });
+      return {};
+    } catch (e) {
+      console.error("Error removing enrollment:", e);
+      return { error: "Failed to remove enrollment due to a system error." };
+    }
+  }
+
+  // QUERIES
+
+  /**
+   * @query _getEnrollmentById
+   * Retrieves an enrollment by its unique ID.
+   * @param {ID} enrollment - The enrollment ID to query.
+   * @returns {EnrollmentSchema | null} The enrollment if found, otherwise null.
+   */
+  async _getEnrollmentById({
+    enrollment,
+  }: {
+    enrollment: ID;
+  }): Promise<EnrollmentSchema | null> {
+    return this.enrollments.findOne({ _id: enrollment });
+  }
+
+  /**
+   * @query _getEnrollmentsByOwner
+   * Retrieves all enrollments for a specific owner.
+   * @param {ID} owner - The owner ID to query.
+   * @returns {EnrollmentSchema[]} Array of enrollments for the owner.
+   */
+  async _getEnrollmentsByOwner({
+    owner,
+  }: {
+    owner: ID;
+  }): Promise<EnrollmentSchema[]> {
+    return this.enrollments.find({ owner }).toArray();
+  }
+
+  /**
+   * @query _getEnrollmentsByCourse
+   * Retrieves all enrollments for a specific course.
+   * @param {ID} course - The course ID to query.
+   * @returns {EnrollmentSchema[]} Array of enrollments for the course.
+   */
+  async _getEnrollmentsByCourse({
+    course,
+  }: {
+    course: ID;
+  }): Promise<EnrollmentSchema[]> {
+    return this.enrollments.find({ course }).toArray();
+  }
+
+  /**
+   * @query _getEnrollmentsBySection
+   * Retrieves all enrollments for a specific section.
+   * @param {ID} section - The section ID to query.
+   * @returns {EnrollmentSchema[]} Array of enrollments for the section.
+   */
+  async _getEnrollmentsBySection({
+    section,
+  }: {
+    section: ID;
+  }): Promise<EnrollmentSchema[]> {
+    return this.enrollments.find({ section }).toArray();
+  }
+
+  /**
+   * @query _getVisibleEnrollments
+   * Retrieves all enrollments with visibility set to true.
+   * @returns {EnrollmentSchema[]} Array of visible enrollments.
+   */
+  async _getVisibleEnrollments(): Promise<EnrollmentSchema[]> {
+    return this.enrollments.find({ visibility: true }).toArray();
+  }
+
+  /**
+   * @query _getAllEnrollments
+   * Retrieves all enrollments in the system.
+   * @returns {EnrollmentSchema[]} Array of all enrollments.
+   */
+  async _getAllEnrollments(): Promise<EnrollmentSchema[]> {
+    return this.enrollments.find({}).toArray();
+  }
+}
+
+```
