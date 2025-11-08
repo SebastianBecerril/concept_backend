@@ -2,6 +2,8 @@
 
 ## Assignment 4C: Final Deliverables
 
+Unfortunately, I ran into many issues with the syncs and time complications, so I am not able to provide you with a final video of my application. However, I did attach my video from my latest working version, and I was able to implement all syncs that were needed, I jsut really struggled to get them to work in the frontend with my agentic coding tool. If I had more time, I have no doubt I could get it to work, but unfortunetely there is none and I apologize due to my lack of foresight on this. My website is also deployed at https://studycircle-frontend-cf8k.onrender.com/ and some parts are functional as well as the overall layout is aviable for viewing. 
+
 - [Final Design Document](4C_FINAL_DESIGN_DOC.md)
 - [Final Reflection](4C_FINAL_REFLECTION.md)
 
